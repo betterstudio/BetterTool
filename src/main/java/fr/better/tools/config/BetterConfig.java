@@ -2,6 +2,7 @@ package fr.better.tools.config;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -24,6 +25,18 @@ public class BetterConfig extends YamlConfiguration {
         }catch(Exception e){
             return null;
         }
+    }
+
+    public Location getLocation(String where, Location location){
+        Location loc = getLocation(where);
+        if(loc == null)loc = location;
+        return loc;
+    }
+
+    public Material getMaterial(String where, Material mat){
+        Material m = Material.getMaterial(getString(where));
+        if(m == null)m = mat;
+        return m;
     }
 
     public String getMessage(String where, boolean wantGrammar, VariableConfig... variables){

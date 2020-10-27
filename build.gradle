@@ -3,7 +3,6 @@ plugins {
     id 'idea'
     id 'maven'
     id 'fr.il_totore.manadrop' version '0.4.1-SNAPSHOT'
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 sourceCompatibility = 1.8
@@ -21,22 +20,10 @@ repositories {
     mavenCentral()
     spigotSnapshot()
     sonatype()
-
-    maven {
-        url "https://jitpack.io"
-    }
-    jcenter()
 }
 
 dependencies {
 
     implementation spigotApi('1.8')
 
-    compile group: 'fr.mrmicky', name: 'FastBoard', version: '1.1.0'
-    compile group: 'com.github.zey-dev', name: 'BetterTools', version: '0.8.2'
-    compile group: 'com.github.inferiumMC', name: 'InferiumCommons', version: '0.10'
-
-}
-
-shadowJar {
 }
