@@ -5,6 +5,8 @@ import fr.better.tools.command.AdvancedCommand;
 import fr.better.tools.command.Parameter;
 import fr.better.tools.command.SimpleCommand;
 import fr.better.tools.config.BetterConfig;
+import fr.better.tools.deprecated.BListener;
+import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.exception.CommandNotFoundException;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
