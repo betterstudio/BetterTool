@@ -10,14 +10,14 @@ You can [download it here](https://www.youtube.com) if you want the .jar version
 
 ### Gradle
 
-```
+```gradle
 repositories { maven { url 'https://jitpack.io' } }
 dependencies { implementation 'com.github.zey-dev:betterTool:${version}' }
 ```
 
 ### Maven 
 
-```
+```xml
 <repositories>
 	<repository>
 		 <id>jitpack.io</id>
