@@ -14,6 +14,12 @@ public class BetterJson<T> {
         gson = new GsonBuilder().setPrettyPrinting().serializeNulls().disableHtmlEscaping().create();
     }
 
+    public T load(File file, Class<T> tClass, T tDefault){
+        T t = load(file, tClass);
+        if(t == null)t = tDefault;
+        return t;
+    }
+
     public T load(File file, Class<T> tClass){
 
         if(fileExist(file, false))return null;
@@ -33,7 +39,7 @@ public class BetterJson<T> {
 
             return gson.fromJson(text.toString(), tClass);
 
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
