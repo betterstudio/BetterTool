@@ -2,6 +2,7 @@ package fr.better.tools.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import fr.better.tools.deprecated.Instantiaters;
 
 import java.io.*;
 
@@ -16,6 +17,17 @@ public class BetterJson<T> {
 
     public T load(File file, Class<T> tClass, T tDefault){
         T t = load(file, tClass);
+        if(t == null)t = tDefault;
+        return t;
+    }
+
+    public T loadfromDataFolder(String name, Class<T> tClass){
+        if(name.contains("."))name = name.split(".")[0];
+        return load(new File(Instantiaters.getPlugin().getDataFolder() + "/name/" + name + ".json"), tClass);
+    }
+
+    public T loadfromDataFolder(String name, Class<T> tClass, T tDefault){
+        T t = loadfromDataFolder(name, tClass);
         if(t == null)t = tDefault;
         return t;
     }
