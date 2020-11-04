@@ -2,9 +2,11 @@ package fr.better.tools.command;
 
 
 import fr.better.tools.BetterPlugin;
+import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.exception.CommandNotFoundException;
 import fr.better.tools.command.action.MachineAction;
 import fr.better.tools.command.action.PlayerAction;
+import fr.better.tools.utils.Utility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -93,28 +95,22 @@ public class AdvancedCommand extends BetterCommand {
             return true;
 
         }else{
-            int i = 1;
-            try{
-                i = Integer.parseInt(strings[1]);
-            }catch(ArrayIndexOutOfBoundsException ignored){}
-            sendHelp(commandSender, i);
+            sendHelp(commandSender);
         }
         return false;
     }
 
-    private void sendHelp(CommandSender commandSender, int page){
+    private void sendHelp(CommandSender commandSender){
 
-        int max = 10*page;
-        int min = 10*(page-1);
-        commandSender.sendMessage("§3" + commandName + "command");
+        commandSender.sendMessage("§8» §3" + Utility.firstToUpper(commandName) + " command §8«");
         commandSender.sendMessage("§8§m-----------------------");
         for(fr.better.tools.command.Parameter param : all){
-            int value = all.indexOf(param);
-            if(min > value && max < value) continue;
-            commandSender.sendMessage("§8» §7/" + commandName + " §3" + param.parameter() + " §7" + param.utility());
+            commandSender.sendMessage("§8» §7/" + commandName + " §3" + param.getArguments() + " " + param.parameter() + " §7" + param.utility());
         }
         commandSender.sendMessage("§8§m-----------------------");
-        commandSender.sendMessage("§7Please do /" + commandName + " help " + (page + 1) + " for more help !");
+        String who = Instantiaters.getPlugin().whoAreYou();
+        if(!who.isEmpty())
+        commandSender.sendMessage("§7Developped par " + who);
     }
 
     public void register(Parameter parameter){

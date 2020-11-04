@@ -12,22 +12,11 @@ public class BetterJson<T> {
 
     public BetterJson() {
 
-        gson = new GsonBuilder().setPrettyPrinting().serializeNulls().disableHtmlEscaping().create();
+        gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     }
 
     public T load(File file, Class<T> tClass, T tDefault){
         T t = load(file, tClass);
-        if(t == null)t = tDefault;
-        return t;
-    }
-
-    public T loadfromDataFolder(String name, Class<T> tClass){
-        if(name.contains("."))name = name.split(".")[0];
-        return load(new File(Instantiaters.getPlugin().getDataFolder() + "/name/" + name + ".json"), tClass);
-    }
-
-    public T loadfromDataFolder(String name, Class<T> tClass, T tDefault){
-        T t = loadfromDataFolder(name, tClass);
         if(t == null)t = tDefault;
         return t;
     }
@@ -57,21 +46,32 @@ public class BetterJson<T> {
         }
     }
 
+    public T load(String name, Class<T> tClass){
+        return load(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name), tClass);
+    }
+
+    public T load(String name, Class<T> tClass, T tDefault){
+        T t = load(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name), tClass);
+        if(t == null)t = tDefault;
+        return t;
+    }
+
     public void save(File file, T content){
 
         fileExist(file, true);
 
         try {
             FileWriter writer = new FileWriter(file);
-
             writer.write(gson.toJson(content));
             writer.flush();
             writer.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public void save(String name, T content){
+        save(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name), content);
     }
 
     private boolean fileExist(File file, boolean createFile){

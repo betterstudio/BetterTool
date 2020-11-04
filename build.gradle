@@ -17,6 +17,7 @@ group 'fr.gabriel'
 version '0.1'
 
 repositories {
+
     mavenCentral()
     spigotSnapshot()
     sonatype()
@@ -25,5 +26,4 @@ repositories {
 dependencies {
 
     implementation spigotApi('1.8')
-
 }

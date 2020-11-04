@@ -24,3 +24,4 @@ target
 # Project file
 
 src/main/java/fr/better/tools/deprecated
+src/test/*

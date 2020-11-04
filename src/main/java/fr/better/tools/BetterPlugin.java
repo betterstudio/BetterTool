@@ -33,6 +33,8 @@ public abstract class BetterPlugin extends JavaPlugin {
     public abstract void onStart();
     public abstract void onStop();
 
+    public String whoAreYou(){ return ""; }
+
     ///FUNCTIONS
     public void addArguments(Parameter parameter){
         if(command == null)return;

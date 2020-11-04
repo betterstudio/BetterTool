@@ -8,6 +8,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class BetterConfig extends YamlConfiguration {
 
+
+
     public void saveLocation(Location loc, String where){
         set(where + ".world", loc.getWorld().getName());
         set(where + ".x", loc.getBlockX());
