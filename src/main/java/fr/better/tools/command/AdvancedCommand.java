@@ -102,7 +102,7 @@ public class AdvancedCommand extends BetterCommand {
 
     private void sendHelp(CommandSender commandSender){
 
-        commandSender.sendMessage("§8» §3" + Utility.firstToUpper(commandName) + " command §8«");
+        commandSender.sendMessage("§8» §3" + Utility.firstToUpper(commandName) + " Command §8«");
         commandSender.sendMessage("§8§m-----------------------");
         for(fr.better.tools.command.Parameter param : all){
             commandSender.sendMessage("§8» §7/" + commandName + " §3" + param.getArguments() + " " + param.parameter() + " §7" + param.utility());

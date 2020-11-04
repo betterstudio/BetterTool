@@ -47,11 +47,11 @@ public class BetterJson<T> {
     }
 
     public T load(String name, Class<T> tClass){
-        return load(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name), tClass);
+        return load(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name + ".json"), tClass);
     }
 
     public T load(String name, Class<T> tClass, T tDefault){
-        T t = load(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name), tClass);
+        T t = load(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name + ".json"), tClass);
         if(t == null)t = tDefault;
         return t;
     }
@@ -71,7 +71,7 @@ public class BetterJson<T> {
     }
 
     public void save(String name, T content){
-        save(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name), content);
+        save(new File(Instantiaters.getPlugin().getDataFolder() + "/" + name + ".json"), content);
     }
 
     private boolean fileExist(File file, boolean createFile){
