@@ -3,6 +3,7 @@ package fr.better.tools.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fr.better.tools.deprecated.Instantiaters;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
 

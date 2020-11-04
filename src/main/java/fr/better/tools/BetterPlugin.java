@@ -15,12 +15,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class BetterPlugin extends JavaPlugin {
 
     private AdvancedCommand command;
+    private BetterConfig config;
 
     ///INITERS
     @Override
     public void onEnable() {
         Instantiaters.setPlugin(this);
         getServer().getPluginManager().registerEvents(new BListener(), this);
+        config = new BetterConfig();
         onStart();
     }
 
@@ -47,11 +49,10 @@ public abstract class BetterPlugin extends JavaPlugin {
         } catch (CommandNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(command);
     }
 
     public BetterConfig getBetterConfig(){
-        return (BetterConfig) getConfig();
+        return config;
     }
 
     public void listen(Listener listener){

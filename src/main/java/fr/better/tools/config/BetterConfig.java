@@ -4,11 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class BetterConfig extends YamlConfiguration {
-
-
 
     public void saveLocation(Location loc, String where){
         set(where + ".world", loc.getWorld().getName());
