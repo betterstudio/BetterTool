@@ -1,0 +1,6 @@
+name: Test
+author: me
+main: fr.better.plugin.Main
+version: 0.1
+commands:
+  test:

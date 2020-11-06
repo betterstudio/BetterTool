@@ -44,11 +44,7 @@ public abstract class BetterPlugin extends JavaPlugin {
     }
 
     public void initCommandExecutor(String name){
-        try {
-            command = new AdvancedCommand(name, this);
-        } catch (CommandNotFoundException e) {
-            e.printStackTrace();
-        }
+        command = new AdvancedCommand(name, this);
     }
 
     public BetterConfig getBetterConfig(){
@@ -61,11 +57,7 @@ public abstract class BetterPlugin extends JavaPlugin {
 
     public AdvancedCommand createCommandExecutor(String name){
         AdvancedCommand cmd = null;
-        try {
-            cmd = new AdvancedCommand(name, this);
-        } catch (CommandNotFoundException e) {
-            e.printStackTrace();
-        }
+        cmd = new AdvancedCommand(name, this);
         return cmd;
     }
 

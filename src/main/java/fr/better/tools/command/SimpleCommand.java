@@ -3,6 +3,8 @@ package fr.better.tools.command;
 import fr.better.tools.BetterPlugin;
 import fr.better.tools.command.action.MachineAction;
 import fr.better.tools.command.action.PlayerAction;
+import fr.better.tools.exception.CommandNotFoundException;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -11,15 +13,23 @@ import java.util.List;
 
 public class SimpleCommand extends BetterCommand {
 
-    private fr.better.tools.command.Parameter param;
+    private Parameter param;
 
     public SimpleCommand(Parameter parameter, BetterPlugin plugin) {
-        plugin.getCommand(parameter.parameter()).setExecutor(this);
+        try{
+            plugin.getCommand(parameter.argument()).setExecutor(this);
+        }catch(NullPointerException e){
+            try {
+                throw new CommandNotFoundException(e.getCause());
+            } catch (CommandNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
         param = parameter;
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         List<String> args = Arrays.asList(strings);
 
@@ -27,9 +37,9 @@ public class SimpleCommand extends BetterCommand {
 
             Player p = (Player) commandSender;
 
-            if(param.getAction() instanceof PlayerAction){
+            if(param.action() instanceof PlayerAction){
 
-                PlayerAction action = (PlayerAction) param.getAction();
+                PlayerAction action = (PlayerAction) param.action();
                 String perm = action.requirePermission();
 
                 if(perm == null || p.hasPermission(perm) || perm.equalsIgnoreCase("no")){
@@ -43,9 +53,9 @@ public class SimpleCommand extends BetterCommand {
             }
         } else {
 
-            if(param.getAction() instanceof MachineAction){
+            if(param.action() instanceof MachineAction){
 
-                ((MachineAction)param.getAction()).executeMachine(args);
+                ((MachineAction)param.action()).executeMachine(args);
 
             }else{
                 commandSender.sendMessage(error);

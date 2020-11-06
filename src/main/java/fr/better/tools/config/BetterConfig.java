@@ -7,7 +7,13 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class BetterConfig extends YamlConfiguration {
+import java.io.File;
+
+public class BetterConfig extends YamlConfiguration{
+
+    public BetterConfig(){
+        // ILTOTORE STP :D
+    }
 
     public void saveLocation(Location loc, String where){
         set(where + ".world", loc.getWorld().getName());
@@ -28,9 +34,9 @@ public class BetterConfig extends YamlConfiguration {
         }
     }
 
-    public Location getLocation(String where, Location location){
+    public Location getLocation(String where, Location locationDefault){
         Location loc = getLocation(where);
-        if(loc == null)loc = location;
+        if(loc == null)loc = locationDefault;
         return loc;
     }
 
