@@ -5,6 +5,7 @@ import fr.better.tools.command.AdvancedCommand;
 import fr.better.tools.command.Parameter;
 import fr.better.tools.command.SimpleCommand;
 import fr.better.tools.config.BetterConfig;
+import fr.better.tools.config.Config;
 import fr.better.tools.deprecated.BListener;
 import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.exception.CommandNotFoundException;
@@ -52,7 +53,7 @@ public abstract class BetterPlugin extends JavaPlugin {
         command = new AdvancedCommand(name, this);
     }
 
-    public BetterConfig getBetterConfig(){
+    public Config getBetterConfig(){
         return config;
     }
 
