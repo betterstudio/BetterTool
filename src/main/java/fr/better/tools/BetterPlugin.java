@@ -12,17 +12,22 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.InputStream;
+
 public abstract class BetterPlugin extends JavaPlugin {
 
     private AdvancedCommand command;
     private BetterConfig config;
+
+    private File configFile;
 
     ///INITERS
     @Override
     public void onEnable() {
         Instantiaters.setPlugin(this);
         getServer().getPluginManager().registerEvents(new BListener(), this);
-        config = new BetterConfig();
+
         onStart();
     }
 
@@ -51,6 +56,10 @@ public abstract class BetterPlugin extends JavaPlugin {
         return config;
     }
 
+    public void loadBetterConfig(){
+        config = new BetterConfig( "config");
+    }
+
     public void listen(Listener listener){
         getServer().getPluginManager().registerEvents(listener, this);
     }
@@ -61,13 +70,14 @@ public abstract class BetterPlugin extends JavaPlugin {
         return cmd;
     }
 
-    public void addCommand(Parameter parameter){
-
-        new SimpleCommand(parameter, this);
-    }
+    public void addCommand(Parameter parameter){ new SimpleCommand(parameter, this); }
 
     public void suicide() {
         System.out.println("Suiciding plugin.");
         Bukkit.getPluginManager().disablePlugin(this);
+    }
+
+    public void shutdown() {
+        Bukkit.shutdown();
     }
 }
