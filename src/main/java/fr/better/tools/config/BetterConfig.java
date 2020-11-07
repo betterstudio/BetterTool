@@ -1,29 +1,22 @@
 package fr.better.tools.config;
 
-import fr.better.tools.BetterPlugin;
 import fr.better.tools.deprecated.Instantiaters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BetterConfig extends YamlConfiguration implements Config{
 
     private File configFile;
-
-    public BetterConfig(File configFile) {
-        this.configFile = configFile;
-
-        if(!configFile.exists())saveConfigToFolder();
-        reload();
-    }
+    private List<Change> grammar;
 
     public BetterConfig(String file) {
 
@@ -42,6 +35,13 @@ public class BetterConfig extends YamlConfiguration implements Config{
             e.printStackTrace();
         } catch (InvalidConfigurationException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void addGrammar(Change... change){
+        if(grammar == null)grammar = new ArrayList<>();
+        for(Change c : change){
+            grammar.add(c);
         }
     }
 
@@ -98,49 +98,56 @@ public class BetterConfig extends YamlConfiguration implements Config{
 
     @Override
     public String getMessage(String where) {
-        return getMessage(where, false,(String) null, new VariableConfig("", ""));
+        return getMessage(where, false,(String) null, new Change("", ""));
     }
 
     @Override
     public String getMessage(String where, boolean wantGrammar) {
-        return getMessage(where, wantGrammar,(String) null, new VariableConfig("", ""));
+        return getMessage(where, wantGrammar,(String) null, new Change("", ""));
     }
 
     @Override
     public String getMessage(String where, String mDefault) {
-        return getMessage(where, false, mDefault, new VariableConfig("", ""));
+        return getMessage(where, false, mDefault, new Change("", ""));
     }
 
     @Override
-    public String getMessage(String where, VariableConfig... variables) {
+    public String getMessage(String where, Change... variables) {
         return getMessage(where, false,null, variables);
     }
 
     @Override
-    public String getMessage(String where, boolean wantGrammar, VariableConfig... variables) {
+    public String getMessage(String where, boolean wantGrammar, Change... variables) {
         return getMessage(where, wantGrammar, null, variables);
     }
 
     @Override
-    public String getMessage(String where, String mDefault, VariableConfig... variables) {
+    public String getMessage(String where, String mDefault, Change... variables) {
         return getMessage(where, false, mDefault, variables);
     }
 
     @Override
     public String getMessage(String where, boolean wantGrammar, String mDefault) {
-        return getMessage(where, wantGrammar, mDefault, new VariableConfig("", ""));
+        return getMessage(where, wantGrammar, mDefault, new Change("", ""));
     }
 
     @Override
-    public String getMessage(String where, boolean wantGrammar, String mDefault, VariableConfig... variables) {
+    public String getMessage(String where, boolean wantGrammar, String mDefault, Change... variables) {
         String message = getString(where, mDefault).replace("&", "§");
-
-        for(VariableConfig config : variables){
+        for(Change config : variables){
             message = message.replace(config.getWord(), config.getReplaced());
         }
 
-        for(GrammarConfig gc : GrammarConfig.values()){
-            message = gc.replace(message);
+        if(this.grammar != null){
+            for(Change grammar : this.grammar){
+                message = message.replace(grammar.getWord(), grammar.getReplaced());
+            }
+        }
+
+        if(wantGrammar){
+            for(GrammarConfig gc : GrammarConfig.values()){
+                message = gc.replace(message);
+            }
         }
 
         return message;

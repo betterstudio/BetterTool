@@ -17,13 +17,13 @@ public interface Config {
 
     String getMessage(String where, boolean wantGrammar);
     String getMessage(String where, String mDefault);
-    String getMessage(String where, VariableConfig... variables);
+    String getMessage(String where, Change... variables);
 
-    String getMessage(String where, boolean wantGrammar, VariableConfig... variables);
-    String getMessage(String where, String mDefault, VariableConfig... variables);
+    String getMessage(String where, boolean wantGrammar, Change... variables);
+    String getMessage(String where, String mDefault, Change... variables);
     String getMessage(String where, boolean wantGrammar, String mDefault);
 
-    String getMessage(String where, boolean wantGrammar, String mDefault, VariableConfig... variables);
+    String getMessage(String where, boolean wantGrammar, String mDefault, Change... variables);
 
     void save();
 }

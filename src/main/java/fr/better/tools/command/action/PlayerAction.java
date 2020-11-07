@@ -8,5 +8,7 @@ import java.util.List;
 public interface PlayerAction extends CAction {
 
     void executePlayer(Player player, List<String> args);
-    String requirePermission();
+    default String requirePermission(){
+        return "";
+    }
 }

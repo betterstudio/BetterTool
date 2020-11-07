@@ -1,10 +1,10 @@
 package fr.better.tools.config;
 
-public class VariableConfig {
+public class Change {
 
     private final String word, replaced;
 
-    public VariableConfig(String word, String replaced) {
+    public Change(String word, String replaced) {
         this.word = word;
         this.replaced = replaced;
     }
