@@ -14,16 +14,16 @@ public abstract class BetterCommand implements CommandExecutor {
         default int parameterSize(){ return parameter().split(" ").length; }
     }
 
-    interface MachineParameter extends Parameter {
+    public interface MachineParameter extends Parameter {
         void action(List<String> args);
     }
 
-    interface PlayerParameter extends Parameter {
+    public interface PlayerParameter extends Parameter {
         void action(Player player, List<String> args);
         default String permission(){ return ""; }
     }
 
-    interface MixParameter extends Parameter {
+    public interface MixParameter extends Parameter {
         default String permission(){ return ""; }
         void action(List<String> args);
         void action(Player player, List<String> args);

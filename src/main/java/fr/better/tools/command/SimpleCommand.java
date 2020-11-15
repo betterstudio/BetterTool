@@ -11,9 +11,9 @@ import java.util.List;
 
 public class SimpleCommand extends BetterCommand {
 
-    private final Parameter param;
+    private Parameter param;
 
-    public SimpleCommand(String argument, Parameter parameter, BetterPlugin plugin) {
+    public SimpleCommand(String argument, BetterPlugin plugin) {
         try{
             plugin.getCommand(argument).setExecutor(this);
         }catch(NullPointerException e){
@@ -23,7 +23,10 @@ public class SimpleCommand extends BetterCommand {
                 ex.printStackTrace();
             }
         }
-        param = parameter;
+    }
+
+    public void setParam(Parameter param) {
+        this.param = param;
     }
 
     @Override

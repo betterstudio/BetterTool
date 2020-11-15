@@ -2,7 +2,6 @@ package fr.better.tools;
 
 
 import fr.better.tools.command.AdvancedCommand;
-import fr.better.tools.command.BetterCommand;
 import fr.better.tools.command.SimpleCommand;
 import fr.better.tools.config.BetterConfig;
 import fr.better.tools.config.Config;
@@ -46,24 +45,19 @@ public abstract class BetterPlugin extends JavaPlugin {
     ///FUNCTIONS
 
     ///////COMMANDS
-    public void addArguments(String arguments, BetterCommand.Parameter parameter){
-        if(command == null)return;
-        command.register(arguments, parameter);
+    public ArgumentCreator addArguments(String arguments){
+        return new ArgumentCreator(arguments, command);
     }
 
     public void initCommandExecutor(String name){
         command = new AdvancedCommand(name, this);
     }
 
-    public AdvancedCommand createCommandExecutor(String name){
-        AdvancedCommand cmd = null;
-        cmd = new AdvancedCommand(name, this);
-        return cmd;
+    public ArgumentCreator addCommand(String arguments){
+        return new ArgumentCreator(arguments, new SimpleCommand(arguments, this));
     }
 
-    public void addCommand(String arguments, BetterCommand.Parameter parameter){
-        new SimpleCommand(arguments, parameter, this);
-    }
+    public AdvancedCommand getCommand(){ return command; }
 
     ///////CONFIG
     public Config getBetterConfig(){
