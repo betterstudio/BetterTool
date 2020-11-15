@@ -1,31 +1,36 @@
 package fr.better.tools.inventory;
 
 import fr.better.tools.utils.ICreate;
+import fr.better.tools.utils.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
-public class GuiManager {
-
-    protected final Inventory inventory;
+public class GuiManager extends InventoryUtils {
 
     public GuiManager(String name, int line){
-        this.inventory = Bukkit.createInventory(null, line*9, name);
+        super(Bukkit.createInventory(null, line*9, name));
     }
 
     public void setTopLine(int data){
-        ItemStack item = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build();
-        for(int i = 0; i < 9; i++){
+        setTopLine(new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
+    }
+
+    public void setTopLine(ItemStack item){
+       for(int i = 0; i < 9; i++){
             inventory.setItem(i, item);
         }
     }
 
     public void setBackLine(int data){
-        ItemStack item = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build();
+        setBackLine(new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
+    }
+
+    public void setBackLine(ItemStack item){
         for(int i = inventory.getSize()-9; i < inventory.getSize(); i++){
             inventory.setItem(i, item);
         }
@@ -42,8 +47,7 @@ public class GuiManager {
         }
     }
 
-    public void setSideWays(int data){
-        ItemStack item = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build();
+    public void setSideWays(ItemStack item){
         switch(inventory.getSize()/9){
             case 6:
                 inventory.setItem(45, item);
@@ -67,16 +71,21 @@ public class GuiManager {
         }
     }
 
-    public GuiManager define(List<Integer> where, ItemStack what){
-        for(int i : where){
-            ItemStack item = Collections.singletonList(what).get(where.get(i));
-            inventory.setItem(i, item);
-        }
-        return this;
+    public void setSideWays(int data){
+        setSideWays(new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
     }
 
-    public GuiManager define(int where, ItemStack item){
-        inventory.setItem(where, item);
-        return this;
+    public void set(ItemStack what, int... where){
+        for(int i : where){
+            inventory.setItem(i, what);
+        }
+    }
+
+    public void add(ItemStack... item){
+        for(ItemStack i : item)inventory.addItem(i);
+    }
+
+    public Inventory give() {
+        return inventory;
     }
 }

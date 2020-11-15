@@ -28,10 +28,8 @@ public class GuiCreator extends GuiManager implements Gui {
     }
 
     @Override
-    public GAction getTheAction(GAction.Type type) {
-        System.out.println(action);
+    public GAction getAction(GAction.Type type) {
         for(GAction c : action){
-            System.out.println(c.getClass());
             if(c.type() == type)return c;
         }
         return null;
@@ -39,8 +37,7 @@ public class GuiCreator extends GuiManager implements Gui {
 
 
     @Override
-    public void setAnAction(GAction action) {
-        System.out.println(action);
+    public void setAction(GAction action) {
         if(hasAction(action.type())){
             this.action.removeIf(act -> act.getClass() == action.getClass());
         }
@@ -49,6 +46,9 @@ public class GuiCreator extends GuiManager implements Gui {
 
     @Override
     public boolean hasAction(GAction.Type type) {
+        for(GAction act : action){
+            if(act.type() == type)return true;
+        }
         return false;
     }
 }

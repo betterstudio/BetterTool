@@ -8,7 +8,7 @@ public interface Gui {
     Inventory give();
     String name();
 
-    GAction getTheAction(GAction.Type type);
-    void setAnAction(GAction action);
+    GAction getAction(GAction.Type type);
+    void setAction(GAction action);
     boolean hasAction(GAction.Type type);
 }

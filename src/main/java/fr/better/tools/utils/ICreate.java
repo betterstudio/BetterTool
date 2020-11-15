@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ICreate {
@@ -42,6 +43,10 @@ public class ICreate {
         itm.setLore(lore);
         item.setItemMeta(itm);
         return this;
+    }
+
+    public ICreate setLore(final String... lore) {
+        return setLore(Arrays.asList(lore));
     }
 
     public ICreate addEnchant(final Enchantment enchant, final int i) {

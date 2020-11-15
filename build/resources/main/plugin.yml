@@ -1,6 +1,6 @@
-name: Test
-author: me
+name: BetterTool-test
+version: 1.4.17
+author: Gabriel
 main: fr.better.plugin.Main
-version: 0.1
 commands:
-  test:
+  shop:

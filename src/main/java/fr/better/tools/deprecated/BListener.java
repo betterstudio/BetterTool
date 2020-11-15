@@ -33,7 +33,7 @@ public class BListener implements Listener {
         if(gui == null)return;
 
         try{
-            ((ClickAction)gui.getTheAction(GAction.Type.CLICK)).action(event);
+            ((ClickAction)gui.getAction(GAction.Type.CLICK)).action(event);
         }catch(Exception ignored){ }
 
     }
@@ -47,7 +47,7 @@ public class BListener implements Listener {
         if(gui == null)return;
 
         try{
-            ((DragAction)gui.getTheAction(GAction.Type.DRAG)).action(event);
+            ((DragAction)gui.getAction(GAction.Type.DRAG)).action(event);
         }catch(Exception ignored){ }
     }
 
@@ -60,7 +60,7 @@ public class BListener implements Listener {
         if(g == null)return;
 
         try{
-            ((CloseAction) g.getTheAction(GAction.Type.CLOSE)).action(e);
+            ((CloseAction) g.getAction(GAction.Type.CLOSE)).action(e);
         }catch(Exception ignored){ }
 
         systemUnRegisterGui(g);
