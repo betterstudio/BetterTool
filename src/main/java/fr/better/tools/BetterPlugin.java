@@ -29,7 +29,6 @@ public abstract class BetterPlugin extends JavaPlugin {
     public void onEnable() {
         Instantiaters.setPlugin(this);
         getServer().getPluginManager().registerEvents(new BListener(), this);
-        DataGui.setup();
         onStart();
     }
 
@@ -72,8 +71,11 @@ public abstract class BetterPlugin extends JavaPlugin {
 
     ////////SETUP
     public void setupMoney(MoneyProvider manager){
-        DataGui.setup();
         Instantiaters.setManager(manager);
+    }
+
+    public void setupShop(){
+        DataGui.setup();
     }
 
     /////////HELP TOOL
