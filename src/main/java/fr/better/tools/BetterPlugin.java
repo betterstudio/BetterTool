@@ -9,7 +9,9 @@ import fr.better.tools.deprecated.BListener;
 import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.inventory.shop.DataGui;
 import fr.better.tools.inventory.shop.MoneyProvider;
+import fr.better.tools.utils.ActionBar;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -70,6 +72,7 @@ public abstract class BetterPlugin extends JavaPlugin {
 
     ////////SETUP
     public void setupMoney(MoneyProvider manager){
+        DataGui.setup();
         Instantiaters.setManager(manager);
     }
 
@@ -85,5 +88,15 @@ public abstract class BetterPlugin extends JavaPlugin {
 
     public void shutdown() {
         Bukkit.shutdown();
+    }
+
+    public static void sendActionBarToAllPlayers(String message) {
+        sendActionBarToAllPlayers(message, -1);
+    }
+
+    public static void sendActionBarToAllPlayers(String message, int duration) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            new ActionBar(p).send(message, duration);
+        }
     }
 }

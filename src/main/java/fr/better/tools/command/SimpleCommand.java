@@ -1,6 +1,8 @@
 package fr.better.tools.command;
 
 import fr.better.tools.BetterPlugin;
+import fr.better.tools.config.BetterConfig;
+import fr.better.tools.config.MessageManager;
 import fr.better.tools.exception.CommandNotFoundException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,10 +14,12 @@ import java.util.List;
 public class SimpleCommand extends BetterCommand {
 
     private Parameter param;
+    private MessageManager manager;
 
     public SimpleCommand(String argument, BetterPlugin plugin) {
         try{
             plugin.getCommand(argument).setExecutor(this);
+            manager = new MessageManager((BetterConfig) plugin.getBetterConfig());
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
@@ -43,10 +47,10 @@ public class SimpleCommand extends BetterCommand {
                 if(permission == null || permission.isEmpty() || p.hasPermission(permission)){
                     parameter.action(p, args);
                 }else{
-                    p.sendMessage(noPermission);
+                    p.sendMessage(manager.getErrorMessageNoPermission());
                 }
             } else {
-                commandSender.sendMessage(error);
+                commandSender.sendMessage("You must be a player to do that !");
             }
 
         } else if (param instanceof MachineParameter) {
@@ -54,7 +58,7 @@ public class SimpleCommand extends BetterCommand {
             if (!(commandSender instanceof Player)) {
                 ((MachineParameter) param).action(args);
             } else {
-                commandSender.sendMessage(error);
+                commandSender.sendMessage("§7Hey ! You must don't be a player to do that !");
             }
 
         } else if (param instanceof MixParameter) {
@@ -68,7 +72,7 @@ public class SimpleCommand extends BetterCommand {
                 if(permission == null || permission.isEmpty() || p.hasPermission(permission)){
                     parameter.action(p, args);
                 }else{
-                    p.sendMessage(noPermission);
+                    p.sendMessage(manager.getErrorMessageNoPermission());
                 }
             } else {
                 ((MachineParameter) param).action(args);

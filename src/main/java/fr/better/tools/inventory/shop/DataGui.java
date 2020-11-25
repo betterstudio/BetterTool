@@ -1,5 +1,8 @@
 package fr.better.tools.inventory.shop;
 
+import fr.better.tools.config.BetterConfig;
+import fr.better.tools.config.MessageManager;
+import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.inventory.GuiCreator;
 import fr.better.tools.inventory.action.ClickAction;
 import fr.better.tools.utils.ICreate;
@@ -22,13 +25,16 @@ public class DataGui extends GuiCreator {
     private static ItemStack plus1, plus10, set0, minus1, minus10, set64, wantmore, valid, stack1, stack2, stack3, stack5, stack7, stack9, stack12;
 
     public static void setup(){
+
+        MessageManager manager = new MessageManager((BetterConfig) Instantiaters.getPlugin().getBetterConfig());
+
         plus1 = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("§a+1").build();
         plus10 = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("§a+10").build();
         set64 = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) 5).setName("§a+64").build();
         minus1 = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("§a-1").build();
         minus10 = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("§a-10").build();
         set0 = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) 14).setName("§a-64").build();
-        wantmore = new ICreate(Material.APPLE).setHead("natatos").setName("§aAcheter +").build();
+        wantmore = manager.getMoreItem();
         stack1 = new ICreate(Material.STAINED_GLASS,1, (short) 5).setName("§a1 stack").build();
         stack2 = new ICreate(Material.STAINED_GLASS, 2, (short) 5).setName("§a2 stack").build();
         stack3 = new ICreate(Material.STAINED_GLASS, 3, (short) 5).setName("§a3 stack").build();
@@ -36,7 +42,7 @@ public class DataGui extends GuiCreator {
         stack7 = new ICreate(Material.STAINED_GLASS, 7, (short) 5).setName("§a7 stack").build();
         stack9 = new ICreate(Material.STAINED_GLASS, 9, (short) 5).setName("§a9 stack").build();
         stack12 = new ICreate(Material.STAINED_GLASS, 12, (short) 5).setName("§a12 stack").build();
-        valid = new ICreate(Material.SIGN).setName("§6Validez !").build();
+        valid = manager.getValidItem();
     }
 
     public DataGui(String name, ItemShop item, Player p, DAction action) {
@@ -62,10 +68,10 @@ public class DataGui extends GuiCreator {
         set(minus10, 11);
         set(set0, 10);
 
-        set(wantmore, 22);
-        set(valid, 26);
+        set(wantmore, 21);
+        set(valid, 23);
 
-        set(item.getView(), 13);
+        set(item.getView(), 22);
 
         setAction(new ClickAction() {
             @Override

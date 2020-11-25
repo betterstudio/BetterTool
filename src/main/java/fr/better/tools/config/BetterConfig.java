@@ -152,4 +152,6 @@ public class BetterConfig extends YamlConfiguration implements Config{
 
         return message;
     }
+
+
 }

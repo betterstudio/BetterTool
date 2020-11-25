@@ -1,5 +1,7 @@
 package fr.better.tools.inventory.shop;
 
+import fr.better.tools.config.BetterConfig;
+import fr.better.tools.config.MessageManager;
 import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.inventory.GuiCreator;
 import fr.better.tools.inventory.action.ClickAction;
@@ -45,9 +47,12 @@ public class ShopManager extends GuiCreator {
     }
 
     public void buy(Player p, ItemShop shop) {
+
+        MessageManager manager = new MessageManager((BetterConfig) Instantiaters.getPlugin().getBetterConfig());
         p.closeInventory();
-        new DataGui("§3Choisir §8§o#acheter", shop, p, (sizeValue) -> {
-            new ValidateGui(p,"§3Valider §8§o#acheter", new VAction() {
+
+        new DataGui(manager.getDataPrefix() + " " + manager.getBuy(), shop, p, (sizeValue) -> {
+            new ValidateGui(p,manager.getValidatePrefix() + " " + manager.getBuy(), new VAction() {
                 @Override
                 public void doWhenAccept() {
                     int[] size = { sizeValue.getI() };
@@ -55,12 +60,12 @@ public class ShopManager extends GuiCreator {
                     int price = shop.getBuyPrice() * size[0];
 
                     if(money < price){
-                        p.sendMessage("§4Tu n'as pas assez d'argent pour faire cela !");
+                        p.sendMessage(manager.getErrorMessageHasntMoney());
                         return;
                     }
 
                     Instantiaters.getManager().set(p, money-price);
-                    p.sendMessage("§3Tu as acheté " + size[0] + " patates!");
+                    p.sendMessage(manager.getMessageWhenBuy(size[0], shop.getItems().getType().name(), price));
 
                     p.closeInventory();
 
@@ -72,22 +77,25 @@ public class ShopManager extends GuiCreator {
                         }
                     }
                 }
-            });
+            }, manager.getAccept(), manager.getDeny());
         });
     }
 
     public void sell(Player p, ItemShop shop) {
         p.closeInventory();
-        new DataGui("§3Choisir §8§o#vendre", shop, p, (sizeValue) -> {
+        
+        MessageManager manager = new MessageManager((BetterConfig) Instantiaters.getPlugin().getBetterConfig());
+
+        new DataGui(manager.getDataPrefix() + " " + manager.getSell(), shop, p, (sizeValue) -> {
 
             final int[] size = {sizeValue.getI()};
 
             if(size[0] > Utility.listAmmount(new InventoryUtils(p.getInventory()).getItemWhenIsSimilar(shop.getItems()))){
-                p.sendMessage("§7Tu n'as pas assez d'item dans ton inventaire !");
+                p.sendMessage(manager.getErrorMessageHasntItem());
                 return;
             }
 
-            new ValidateGui(p,"§3Valider §8§o#vendre", new VAction() {
+            new ValidateGui(p,manager.getValidatePrefix() + manager.getSell(), new VAction() {
 
                 @Override
                 public void doWhenAccept() {
@@ -121,27 +129,28 @@ public class ShopManager extends GuiCreator {
                     }
 
                     Instantiaters.getManager().set(p, money+price);
-                    p.sendMessage("§3Tu as gagné " + price + " € en vendant tes patates!");
+                    p.sendMessage(manager.getMessageWhenSell(size[0], shop.getItems().getType().name(), price));
                     p.closeInventory();
 
                 }
-            });
+            }, manager.getAccept(), manager.getDeny());
         });
     }
 
     public void allSell(Player p, ItemShop shop) {
         p.closeInventory();
 
+        MessageManager manager = new MessageManager((BetterConfig) Instantiaters.getPlugin().getBetterConfig());
         ItemStack item = shop.getItems();
 
         List<ItemStack> contained = new InventoryUtils(p.getInventory()).getItemWhenIsSimilar(item);
 
         if(contained.isEmpty()){
-            p.sendMessage("§7Tu n'as pas cet item dans ton inventaire !");
+            p.sendMessage(manager.getErrorMessageHasntAnyItem());
             return;
         }
 
-        new ValidateGui(p, "§3Valider §8§o#tout-vendre", new VAction() {
+        new ValidateGui(p, manager.getValidatePrefix() + " " + manager.getAllSell(), new VAction() {
             @Override
             public void doWhenAccept() {
 
@@ -149,14 +158,17 @@ public class ShopManager extends GuiCreator {
                 int price = shop.getSellPrice() * Utility.listAmmount(contained);
 
                 Instantiaters.getManager().set(p, money+price);
-                p.sendMessage("§3Tu as gagné " + price + " € en vendant toutes tes patates!");
+                p.sendMessage(
+                        new MessageManager((BetterConfig) Instantiaters.getPlugin().getBetterConfig())
+                                .getMessageWhenSellAll(shop.getItems().getItemMeta().getDisplayName(), price)
+                );
 
                 for(ItemStack i : contained){
                     p.getInventory().remove(i);
                 }
                 p.closeInventory();
             }
-        });
+        }, manager.getAccept(), manager.getDeny());
     }
 
     public ItemShopCreator addItem(){

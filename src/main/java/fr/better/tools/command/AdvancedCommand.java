@@ -2,6 +2,8 @@ package fr.better.tools.command;
 
 
 import fr.better.tools.BetterPlugin;
+import fr.better.tools.config.BetterConfig;
+import fr.better.tools.config.MessageManager;
 import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.exception.CommandNotFoundException;
 import fr.better.tools.utils.Utility;
@@ -18,9 +20,10 @@ public class AdvancedCommand extends BetterCommand {
 
     private final Map<String, Parameter> all;
     private final String commandName;
+    private final MessageManager manager;
 
     public AdvancedCommand(String commandName, BetterPlugin main){
-
+        this.manager = new MessageManager((BetterConfig) main.getBetterConfig());
         this.commandName = commandName;
         this.all = new HashMap<>();
         try{
@@ -52,7 +55,7 @@ public class AdvancedCommand extends BetterCommand {
 
             if (param == null) {
 
-                commandSender.sendMessage(noArgs);
+                commandSender.sendMessage(manager.getErrorMessageNoArguments());
                 return false;
             }
 
@@ -79,7 +82,7 @@ public class AdvancedCommand extends BetterCommand {
                     }
 
                 }else{
-                    commandSender.sendMessage(error);
+                    commandSender.sendMessage("You must be a player to do that");
                 }
 
             }else if(param instanceof MixParameter){
@@ -106,7 +109,7 @@ public class AdvancedCommand extends BetterCommand {
                 if(!(commandSender instanceof Player)){
                     parameter.action(args);
                 }else{
-                    commandSender.sendMessage(error);
+                    commandSender.sendMessage("§7Hey ! You must not be a player to do that !");
                 }
             }
         }else{
@@ -117,7 +120,7 @@ public class AdvancedCommand extends BetterCommand {
 
     private void sendHelp(CommandSender commandSender){
 
-        commandSender.sendMessage("§8» §3" + Utility.firstToUpper(commandName) + " Command §8«");
+        commandSender.sendMessage(manager.getCommandTitle(Utility.firstToUpper(commandName)));
         commandSender.sendMessage("§8§m-----------------------");
         for(Map.Entry<String, Parameter> entry : all.entrySet()){
             Parameter param = entry.getValue();
@@ -126,7 +129,7 @@ public class AdvancedCommand extends BetterCommand {
         commandSender.sendMessage("§8§m-----------------------");
         String who = Instantiaters.getPlugin().whoAreYou();
         if(who != null && !who.isEmpty())
-        commandSender.sendMessage("§7Developped by " + who);
+        commandSender.sendMessage(manager.getDeveloppedBy() + " " + who);
     }
 
     public void register(String s, Parameter parameter){

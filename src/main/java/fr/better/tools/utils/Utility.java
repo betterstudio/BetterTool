@@ -1,5 +1,6 @@
 package fr.better.tools.utils;
 
+import fr.better.tools.config.Change;
 import fr.better.tools.deprecated.Instantiaters;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
@@ -29,6 +30,19 @@ public class Utility {
 
     public static int listAmmount(List<ItemStack> items){
         return items.stream().mapToInt(ItemStack::getAmount).sum();
+    }
+
+    public static List<String> replaceAll(List<String> list, Change... changes){
+        List<String> all = new ArrayList<>();
+
+        for(String part : list){
+            String a = part;
+            for(Change change : changes){
+                a = part.replace(change.getWord(), change.getReplaced());
+            }
+            all.add(a);
+        }
+        return all;
     }
 
     public static List<ItemStack> toItemStackArray(int ammount, ItemStack base){
