@@ -1,9 +1,9 @@
 package fr.better.tools.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class HashMapWithPlayerKey<T>{
 
@@ -31,5 +31,20 @@ public class HashMapWithPlayerKey<T>{
 
     public boolean exist(Player key){
         return data.containsKey(key.getUniqueId());
+    }
+
+    public List<Player> keys(){
+        List<Player> players = new ArrayList<>();
+        for(UUID u : data.keySet()){
+
+            Player p = Bukkit.getPlayer(u);
+
+            if(p == null){
+                data.remove(u);
+            }
+
+            players.add(p);
+        }
+        return players;
     }
 }
