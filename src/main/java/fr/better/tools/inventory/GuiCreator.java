@@ -17,6 +17,16 @@ public class GuiCreator extends GuiManager implements Gui {
         action = new ArrayList<>();
     }
 
+    private GuiCreator(Inventory inventory) {
+        super(inventory);
+        Instantiaters.systemRegisterGui(this);
+        action = new ArrayList<>();
+    }
+
+    public static GuiCreator asGui(Inventory inv){
+        return new GuiCreator(inv);
+    }
+
     @Override
     public Inventory give() {
         return inventory;

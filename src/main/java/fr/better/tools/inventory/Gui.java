@@ -11,4 +11,5 @@ public interface Gui {
     GAction getAction(GAction.Type type);
     void setAction(GAction action);
     boolean hasAction(GAction.Type type);
+
 }

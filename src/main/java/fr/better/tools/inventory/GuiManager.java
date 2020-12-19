@@ -16,6 +16,10 @@ public class GuiManager extends InventoryUtils {
         super(Bukkit.createInventory(null, line*9, name));
     }
 
+    public GuiManager(Inventory inventory){
+        super(inventory);
+    }
+
     public void setTopLine(int data){
         setTopLine(new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
     }

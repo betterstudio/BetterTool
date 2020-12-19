@@ -2,6 +2,7 @@ package fr.better.tools;
 
 
 import fr.better.tools.command.AdvancedCommand;
+import fr.better.tools.command.ArgumentCreator;
 import fr.better.tools.command.SimpleCommand;
 import fr.better.tools.config.BetterConfig;
 import fr.better.tools.config.Config;
@@ -61,7 +62,7 @@ public abstract class BetterPlugin extends JavaPlugin {
     public AdvancedCommand getCommand(){ return command; }
 
     ///////CONFIG
-    public Config getBetterConfig(){
+    public BetterConfig getBetterConfig(){
         return config;
     }
 

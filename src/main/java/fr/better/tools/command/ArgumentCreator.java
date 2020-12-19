@@ -1,8 +1,4 @@
-package fr.better.tools;
-
-import fr.better.tools.command.AdvancedCommand;
-import fr.better.tools.command.BetterCommand;
-import fr.better.tools.command.SimpleCommand;
+package fr.better.tools.command;
 
 public class ArgumentCreator {
 
