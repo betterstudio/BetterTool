@@ -120,7 +120,7 @@ public class AdvancedCommand extends BetterCommand {
 
     private void sendHelp(CommandSender commandSender){
 
-        commandSender.sendMessage(manager.getCommandTitle(Utility.firstToUpper(commandName)));
+        commandSender.sendMessage("§7» §3" + Utility.firstToUpper(commandName) + " §7«");
         commandSender.sendMessage("§8§m-----------------------");
         for(Map.Entry<String, Parameter> entry : all.entrySet()){
             Parameter param = entry.getValue();
@@ -129,7 +129,7 @@ public class AdvancedCommand extends BetterCommand {
         commandSender.sendMessage("§8§m-----------------------");
         String who = Instantiaters.getPlugin().whoAreYou();
         if(who != null && !who.isEmpty())
-        commandSender.sendMessage(manager.getDeveloppedBy() + " " + who);
+        commandSender.sendMessage( " §7 Developped by : " + who);
     }
 
     public void register(String s, Parameter parameter){

@@ -120,19 +120,19 @@ public class MessageManager {
     ///// COMMANDS CATEGORY
 
     public String getErrorMessageNoPermission(){
-        return config.getMessage("Command.noPermission", true, "§7Tu n'as pas la permission d'executer cette commande !");
+        try{
+            return config.getMessage("Command.noPermission", true, "§7Tu n'as pas la permission d'executer cette commande !");
+        }catch(Exception e){
+            return "§7Tu n'as pas la permission d'executer cette commande";
+        }
     }
 
     public String getErrorMessageNoArguments(){
-        return config.getMessage("Command.noArgument", true, "§7Cette sous-commande n'existe pas !");
-    }
-
-    public String getDeveloppedBy(){
-        return config.getMessage("Command.developedBy", true, "§7Developed by");
-    }
-
-    public String getCommandTitle(String name) {
-        return config.getMessage("Command.title", true, "§8» §3!name! Command §8«", new Change("!name!", name));
+        try{
+            return config.getMessage("Command.noArgument", true, "§7Cette sous-commande n'existe pas !");
+        }catch(Exception e){
+            return "§7Cette sous-commande n'existe pas !";
+        }
     }
 }
 
