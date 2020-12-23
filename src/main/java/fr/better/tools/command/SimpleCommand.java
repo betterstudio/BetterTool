@@ -66,7 +66,7 @@ public class SimpleCommand extends BetterCommand {
             if (commandSender instanceof Player) {
 
                 Player p = (Player) commandSender;
-                PlayerParameter parameter = (PlayerParameter) param;
+                MixParameter parameter = (MixParameter) param;
                 String permission = parameter.permission();
 
                 if(permission == null || permission.isEmpty() || p.hasPermission(permission)){
@@ -75,7 +75,7 @@ public class SimpleCommand extends BetterCommand {
                     p.sendMessage(manager.getErrorMessageNoPermission());
                 }
             } else {
-                ((MachineParameter) param).action(args);
+                ((MixParameter)param).action(args);
             }
         }
         return true;
