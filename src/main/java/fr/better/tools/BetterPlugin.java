@@ -1,9 +1,7 @@
 package fr.better.tools;
 
 
-import fr.better.tools.command.AdvancedCommand;
-import fr.better.tools.command.ArgumentCreator;
-import fr.better.tools.command.SimpleCommand;
+import fr.better.tools.command.*;
 import fr.better.tools.config.BetterConfig;
 import fr.better.tools.config.Config;
 import fr.better.tools.deprecated.BListener;
@@ -17,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
 
 public abstract class BetterPlugin extends JavaPlugin {
 
@@ -42,12 +41,10 @@ public abstract class BetterPlugin extends JavaPlugin {
     public abstract void onStart();
     public abstract void onStop();
 
-    public String whoAreYou(){ return ""; }
-
     ///FUNCTIONS
 
     ///////COMMANDS
-    public ArgumentCreator addArguments(String arguments){
+    public ArgumentCreator<BetterCommand.PlayerParameter, BetterCommand.MachineParameter, BetterCommand.MixParameter> addArguments(String arguments){
         return new ArgumentCreator(arguments, command);
     }
 
@@ -55,11 +52,14 @@ public abstract class BetterPlugin extends JavaPlugin {
         command = new AdvancedCommand(name, this);
     }
 
-    public ArgumentCreator addCommand(String arguments){
+    public ArgumentCreator<BetterCommand.PlayerAction, BetterCommand.MachineAction, BetterCommand.MixAction> addCommand(String arguments){
+
         return new ArgumentCreator(arguments, new SimpleCommand(arguments, this));
     }
 
-    public AdvancedCommand getCommand(){ return command; }
+    public AdvancedCommand getCommand(){
+        return command;
+    }
 
     ///////CONFIG
     public BetterConfig getBetterConfig(){
@@ -78,6 +78,8 @@ public abstract class BetterPlugin extends JavaPlugin {
     public void setupShop(){
         DataGui.setup();
     }
+
+    public CommandMessageBuilder setupMessageCommand() { return new CommandMessageBuilder(); }
 
     /////////HELP TOOL
     public void listen(Listener listener){

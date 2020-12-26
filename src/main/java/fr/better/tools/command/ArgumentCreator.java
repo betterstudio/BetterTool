@@ -1,6 +1,6 @@
 package fr.better.tools.command;
 
-public class ArgumentCreator {
+public class ArgumentCreator<A, B, C> {
 
     private final String argument;
     private final BetterCommand command;
@@ -10,32 +10,31 @@ public class ArgumentCreator {
         this.command = command;
     }
 
-    public void setupPlayer(BetterCommand.PlayerParameter parameter){
+    public void setupPlayer(A parameter){
 
         if(command instanceof AdvancedCommand){
             ((AdvancedCommand)
-            command).register(argument, parameter);
+            command).register(argument, (BetterCommand.PlayerParameter)parameter);
         }else{
-            ((SimpleCommand)command).setParam(parameter);
+            ((SimpleCommand)command).setParam((BetterCommand.PlayerAction)parameter);
         }
     }
 
-    public void setupMachine(BetterCommand.MachineParameter parameter){
+    public void setupMachine(B parameter){
         if(command instanceof AdvancedCommand){
             AdvancedCommand c = (AdvancedCommand)command;
-            c.register(argument, parameter);
+            c.register(argument, (BetterCommand.MachineParameter)parameter);
         }else{
-            ((SimpleCommand)command).setParam(parameter);
+            ((SimpleCommand)command).setParam((BetterCommand.MachineAction)parameter);
         }
     }
 
-    public void setupMix(BetterCommand.MixParameter parameter){
+    public void setupMix(C parameter){
         if(command instanceof AdvancedCommand){
             AdvancedCommand c = (AdvancedCommand)command;
-            c.register(argument, parameter);
+            c.register(argument, (BetterCommand.MixParameter)parameter);
         }else{
-            ((SimpleCommand)command).setParam(parameter);
+            ((SimpleCommand)command).setParam((BetterCommand.MixAction) parameter);
         }
     }
-
 }

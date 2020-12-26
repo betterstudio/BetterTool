@@ -20,10 +20,8 @@ public class AdvancedCommand extends BetterCommand {
 
     private final Map<String, Parameter> all;
     private final String commandName;
-    private final MessageManager manager;
 
     public AdvancedCommand(String commandName, BetterPlugin main){
-        this.manager = new MessageManager((BetterConfig) main.getBetterConfig());
         this.commandName = commandName;
         this.all = new HashMap<>();
         try{
@@ -55,7 +53,7 @@ public class AdvancedCommand extends BetterCommand {
 
             if (param == null) {
 
-                commandSender.sendMessage(manager.getErrorMessageNoArguments());
+                commandSender.sendMessage(BetterCommand.getErrorArgument());
                 return false;
             }
 
@@ -120,16 +118,16 @@ public class AdvancedCommand extends BetterCommand {
 
     private void sendHelp(CommandSender commandSender){
 
-        commandSender.sendMessage("§7» §3" + Utility.firstToUpper(commandName) + " §7«");
+        commandSender.sendMessage(BetterCommand.getTopHelpMessage().replace("!cmd!", Utility.firstToUpper(commandName)));
         commandSender.sendMessage("§8§m-----------------------");
         for(Map.Entry<String, Parameter> entry : all.entrySet()){
             Parameter param = entry.getValue();
             commandSender.sendMessage("§8» §7/" + commandName + " §3" + entry.getKey() + " " + param.parameter() + " §7" + param.utility());
         }
         commandSender.sendMessage("§8§m-----------------------");
-        String who = Instantiaters.getPlugin().whoAreYou();
+        String who = Instantiaters.getPlugin().getDescription().getAuthors().get(0);
         if(who != null && !who.isEmpty())
-        commandSender.sendMessage( " §7 Developped by : " + who);
+        commandSender.sendMessage(BetterCommand.getFootHeadMessage() + who);
     }
 
     public void register(String s, Parameter parameter){

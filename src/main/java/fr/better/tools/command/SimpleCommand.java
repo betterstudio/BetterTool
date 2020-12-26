@@ -13,13 +13,13 @@ import java.util.List;
 
 public class SimpleCommand extends BetterCommand {
 
-    private Parameter param;
+    private Action param;
     private MessageManager manager;
 
     public SimpleCommand(String argument, BetterPlugin plugin) {
         try{
             plugin.getCommand(argument).setExecutor(this);
-            manager = new MessageManager((BetterConfig) plugin.getBetterConfig());
+            manager = new MessageManager( plugin.getBetterConfig());
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
@@ -29,7 +29,7 @@ public class SimpleCommand extends BetterCommand {
         }
     }
 
-    public void setParam(Parameter param) {
+    public void setParam(Action param) {
         this.param = param;
     }
 
