@@ -79,7 +79,7 @@ public abstract class BetterPlugin extends JavaPlugin {
         DataGui.setup();
     }
 
-    public CommandMessageBuilder setupMessageCommand() { return new CommandMessageBuilder(); }
+    public BetterCommand.MessageBuilder setupMessageCommand() { return new BetterCommand.MessageBuilder(); }
 
     /////////HELP TOOL
     public void listen(Listener listener){

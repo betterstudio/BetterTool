@@ -59,7 +59,7 @@ public abstract class BetterCommand implements CommandExecutor {
         return footHeadMessage;
     }
 
-    public class MessageBuilder{
+    public static class MessageBuilder{
         public MessageBuilder setErrorPermission(String message){
             errorPermission = message;
             return this;
