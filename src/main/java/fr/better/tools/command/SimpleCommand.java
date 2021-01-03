@@ -1,8 +1,6 @@
 package fr.better.tools.command;
 
 import fr.better.tools.BetterPlugin;
-import fr.better.tools.config.BetterConfig;
-import fr.better.tools.config.MessageManager;
 import fr.better.tools.exception.CommandNotFoundException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

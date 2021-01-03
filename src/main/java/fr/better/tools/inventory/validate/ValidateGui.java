@@ -1,8 +1,5 @@
 package fr.better.tools.inventory.validate;
 
-import fr.better.tools.config.BetterConfig;
-import fr.better.tools.config.MessageManager;
-import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.inventory.GuiCreator;
 import fr.better.tools.inventory.action.ClickAction;
 

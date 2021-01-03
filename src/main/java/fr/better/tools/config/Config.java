@@ -2,6 +2,7 @@ package fr.better.tools.config;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public interface Config {
 

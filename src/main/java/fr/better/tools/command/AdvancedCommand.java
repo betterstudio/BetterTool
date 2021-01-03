@@ -2,8 +2,6 @@ package fr.better.tools.command;
 
 
 import fr.better.tools.BetterPlugin;
-import fr.better.tools.config.BetterConfig;
-import fr.better.tools.config.MessageManager;
 import fr.better.tools.deprecated.Instantiaters;
 import fr.better.tools.exception.CommandNotFoundException;
 import fr.better.tools.utils.Utility;
