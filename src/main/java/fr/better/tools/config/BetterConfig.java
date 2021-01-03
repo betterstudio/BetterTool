@@ -1,6 +1,6 @@
 package fr.better.tools.config;
 
-import fr.better.tools.deprecated.Instantiaters;
+import fr.better.tools.system.Instantiaters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

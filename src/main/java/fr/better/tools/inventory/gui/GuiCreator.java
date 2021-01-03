@@ -1,7 +1,8 @@
-package fr.better.tools.inventory;
+package fr.better.tools.inventory.gui;
 
-import fr.better.tools.deprecated.Instantiaters;
-import fr.better.tools.inventory.action.GAction;
+import fr.better.tools.inventory.gui.invAction.ActionType;
+import fr.better.tools.inventory.gui.invAction.InvAction;
+import fr.better.tools.system.Instantiaters;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class GuiCreator extends GuiManager implements Gui {
 
-    private final List<GAction> action;
+    private final List<InvAction> action;
 
     public GuiCreator(String name, int line) {
         super(name, line);
@@ -37,26 +38,22 @@ public class GuiCreator extends GuiManager implements Gui {
         return inventory.getTitle();
     }
 
-    @Override
-    public GAction getAction(GAction.Type type) {
-        for(GAction c : action){
+    public InvAction getAction(ActionType type) {
+        for(InvAction c : action){
             if(c.type() == type)return c;
         }
         return null;
     }
 
-
-    @Override
-    public void setAction(GAction action) {
+    public void setAction(InvAction action) {
         if(hasAction(action.type())){
             this.action.removeIf(act -> act.getClass() == action.getClass());
         }
         this.action.add(action);
     }
 
-    @Override
-    public boolean hasAction(GAction.Type type) {
-        for(GAction act : action){
+    public boolean hasAction(ActionType type) {
+        for(InvAction act : action){
             if(act.type() == type)return true;
         }
         return false;

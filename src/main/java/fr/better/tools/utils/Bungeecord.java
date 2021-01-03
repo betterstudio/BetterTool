@@ -4,7 +4,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import fr.better.tools.BetterPlugin;
-import fr.better.tools.deprecated.Instantiaters;
+import fr.better.tools.system.Instantiaters;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -12,8 +12,6 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Bungeecord implements PluginMessageListener {
 
@@ -53,17 +51,12 @@ public class Bungeecord implements PluginMessageListener {
         }
     }
 
-    private final List<Message> messages;
-    private final BetterPlugin plugin;
-
-    public Bungeecord() {
-        this.messages = new ArrayList<>();
-        this.plugin = Instantiaters.getPlugin();
-    }
+    private final List<Message> messages = new ArrayList<>();
+    private final BetterPlugin plugin = Instantiaters.getPlugin();
 
     public int getPlayerCount(Player p){
         final int[] size = {0};
-        new Message(p, "BungeeCord", "PlayerCount").asResult((r) -> {
+        new Message(p, "BungeeCord", "PlayerCount", "ALL").asResult((r) -> {
               size[0] = Integer.parseInt(r.readUTF());
         });
         return size[0];

@@ -1,4 +1,4 @@
-package fr.better.tools.utils;
+package fr.better.tools.inventory;
 
 import org.bukkit.Color;
 import org.bukkit.Material;

@@ -1,14 +1,11 @@
-package fr.better.tools.inventory;
+package fr.better.tools.inventory.gui;
 
-import fr.better.tools.utils.ICreate;
-import fr.better.tools.utils.InventoryUtils;
+import fr.better.tools.inventory.ICreate;
+import fr.better.tools.inventory.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GuiManager extends InventoryUtils {
 

@@ -1,4 +1,4 @@
-package fr.better.tools.inventory.validate;
+package fr.better.tools.inventory.gui.validate;
 
 public interface VAction {
 

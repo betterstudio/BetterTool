@@ -1,9 +1,9 @@
-package fr.better.tools.inventory.validate;
+package fr.better.tools.inventory.gui.validate;
 
-import fr.better.tools.inventory.GuiCreator;
-import fr.better.tools.inventory.action.ClickAction;
+import fr.better.tools.inventory.gui.GuiCreator;
+import fr.better.tools.inventory.gui.invAction.ClickAction;
 
-import fr.better.tools.utils.ICreate;
+import fr.better.tools.inventory.ICreate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 public class NMS {
 
-    public void sendPacket(Player player, Object packet) {
+    public static void sendPacket(Player player, Object packet) {
         try {
             Object handle = player.getClass().getMethod("getHandle").invoke(player);
             Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
@@ -15,7 +15,7 @@ public class NMS {
         }
     }
 
-    public Class<?> getMinecraftNMSClass(String name) {
+    public static Class<?> getMinecraftNMSClass(String name) {
         try {
             return Class.forName("net.minecraft.server."
                     + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3] + "." + name);
@@ -25,7 +25,7 @@ public class NMS {
         return null;
     }
 
-    public Class<?> getBukkitNMSClass(String name) {
+    public static Class<?> getBukkitNMSClass(String name) {
         try {
             return Class.forName(
                     "org.bukkit.craftbukkit."

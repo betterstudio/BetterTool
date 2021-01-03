@@ -1,4 +1,4 @@
-package fr.better.tools.utils;
+package fr.better.tools.utils.iterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

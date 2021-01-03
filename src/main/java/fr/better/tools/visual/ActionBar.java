@@ -1,14 +1,14 @@
-package fr.better.tools.utils;
+package fr.better.tools.visual;
 
-import fr.better.tools.deprecated.Instantiaters;
+import fr.better.tools.system.Instantiaters;
+import fr.better.tools.utils.NMS;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class ActionBar extends NMS{
+public class ActionBar extends NMS {
 
     private final String nmsver;
     private final boolean useOldMethods;

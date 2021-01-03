@@ -12,12 +12,10 @@ import java.util.List;
 public class SimpleCommand extends BetterCommand {
 
     private Action param;
-    private MessageManager manager;
 
     public SimpleCommand(String argument, BetterPlugin plugin) {
         try{
             plugin.getCommand(argument).setExecutor(this);
-            manager = new MessageManager( plugin.getBetterConfig());
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
@@ -45,7 +43,7 @@ public class SimpleCommand extends BetterCommand {
                 if(permission == null || permission.isEmpty() || p.hasPermission(permission)){
                     parameter.action(p, args);
                 }else{
-                    p.sendMessage(manager.getErrorMessageNoPermission());
+                    p.sendMessage(getErrorPermission());
                 }
             } else {
                 commandSender.sendMessage("You must be a player to do that !");
@@ -70,7 +68,7 @@ public class SimpleCommand extends BetterCommand {
                 if(permission == null || permission.isEmpty() || p.hasPermission(permission)){
                     parameter.action(p, args);
                 }else{
-                    p.sendMessage(manager.getErrorMessageNoPermission());
+                    p.sendMessage(getErrorPermission());
                 }
             } else {
                 ((MixParameter)param).action(args);

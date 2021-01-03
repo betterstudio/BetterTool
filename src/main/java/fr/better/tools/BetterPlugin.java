@@ -3,9 +3,9 @@ package fr.better.tools;
 
 import fr.better.tools.command.*;
 import fr.better.tools.config.BetterConfig;
-import fr.better.tools.deprecated.BListener;
-import fr.better.tools.deprecated.Instantiaters;
-import fr.better.tools.utils.ActionBar;
+import fr.better.tools.system.BListener;
+import fr.better.tools.system.Instantiaters;
+import fr.better.tools.visual.ActionBar;
 import fr.better.tools.utils.Bungeecord;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -89,8 +89,6 @@ public abstract class BetterPlugin extends JavaPlugin {
     public static void sendActionBarToAllPlayers(String message) {
         sendActionBarToAllPlayers(message, -1);
     }
-
-    public Bungeecord bungeecord(){if(bungee==null)bungee=new Bungeecord(); return bungee; }
 
     public static void sendActionBarToAllPlayers(String message, int duration) {
         for (Player p : Bukkit.getOnlinePlayers()) {

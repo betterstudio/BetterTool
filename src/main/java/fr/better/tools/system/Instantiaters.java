@@ -1,15 +1,12 @@
-package fr.better.tools.deprecated;
+package fr.better.tools.system;
 
 import fr.better.tools.BetterPlugin;
-import fr.better.tools.inventory.GuiCreator;
-import fr.better.tools.inventory.shop.MoneyProvider;
-import fr.better.tools.inventory.shop.ShopManager;
+import fr.better.tools.inventory.gui.GuiCreator;
 
 public class Instantiaters {
 
     private static BetterPlugin plugin;
     private static BListener listener;
-    private static MoneyProvider provider;
 
     public static BetterPlugin getPlugin() {
         return plugin;
@@ -24,13 +21,4 @@ public class Instantiaters {
     public static void setListener(BListener bListener) {
         listener = bListener;
     }
-
-    public static MoneyProvider getManager() {
-        return provider;
-    }
-
-    public static void setManager(MoneyProvider manager) {
-        Instantiaters.provider = manager;
-    }
-
 }

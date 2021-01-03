@@ -1,4 +1,4 @@
-package fr.better.tools.utils;
+package fr.better.tools.inventory;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

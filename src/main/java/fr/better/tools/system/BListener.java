@@ -1,10 +1,7 @@
-package fr.better.tools.deprecated;
+package fr.better.tools.system;
 
-import fr.better.tools.inventory.Gui;
-import fr.better.tools.inventory.action.ClickAction;
-import fr.better.tools.inventory.action.CloseAction;
-import fr.better.tools.inventory.action.DragAction;
-import fr.better.tools.inventory.action.GAction;
+import fr.better.tools.inventory.gui.Gui;
+import fr.better.tools.inventory.gui.invAction.CloseAction;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -33,7 +30,7 @@ public class BListener implements Listener {
         if(gui == null)return;
 
         try{
-            ((ClickAction)gui.getAction(GAction.Type.CLICK)).action(event);
+            ((ClickAction)gui.getAction(ActionType.CLICK)).action(event);
         }catch(Exception ignored){ }
 
     }
@@ -47,7 +44,7 @@ public class BListener implements Listener {
         if(gui == null)return;
 
         try{
-            ((DragAction)gui.getAction(GAction.Type.DRAG)).action(event);
+            ((DragAction)gui.getAction(ActionType.DRAG)).action(event);
         }catch(Exception ignored){ }
     }
 
@@ -60,7 +57,7 @@ public class BListener implements Listener {
         if(g == null)return;
 
         try{
-            ((CloseAction) g.getAction(GAction.Type.CLOSE)).action(e);
+            ((CloseAction) g.getAction(ActionType.CLOSE)).action(e);
         }catch(Exception ignored){ }
 
         systemUnRegisterGui(g);
