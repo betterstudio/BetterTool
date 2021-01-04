@@ -12,6 +12,7 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Bungeecord implements PluginMessageListener {
 
@@ -24,21 +25,22 @@ public class Bungeecord implements PluginMessageListener {
         private final String channel;
         private final String subChannel;
         private final List<String> param;
-        private Result result;
+        private Consumer<ByteArrayDataInput> result;
 
         public Message(Player player, String channel, String subChannel, String... param) {
             this.player = player;
             this.channel = channel;
 
-            if(!Bukkit.getMessenger().isIncomingChannelRegistered(plugin, channel))Bukkit.getMessenger().registerIncomingPluginChannel(plugin, channel, plugin.bungeecord());
+            if(!Bukkit.getMessenger().isIncomingChannelRegistered(plugin, channel))Bukkit.getMessenger().registerIncomingPluginChannel(plugin, channel, new Bungeecord());
             if(!Bukkit.getMessenger().isOutgoingChannelRegistered(plugin, channel))Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, channel);
 
             this.subChannel = subChannel;
             this.param = Arrays.asList(param);
         }
 
-        public void asResult(Result result){
+        public Message asResult(Consumer<ByteArrayDataInput> result){
             this.result = result;
+            return this;
         }
 
         public void send(){
@@ -75,7 +77,7 @@ public class Bungeecord implements PluginMessageListener {
             if(!subchannel.equalsIgnoreCase(result.subChannel))continue;
             if(result.player != player)continue;
 
-            result.result.receive(in);
+            result.result.accept(in);
         }
     }
 }

@@ -4,7 +4,6 @@ import fr.better.tools.config.Change;
 import fr.better.tools.system.Instantiaters;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
 

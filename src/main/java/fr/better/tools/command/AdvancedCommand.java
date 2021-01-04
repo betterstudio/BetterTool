@@ -1,6 +1,5 @@
 package fr.better.tools.command;
 
-
 import fr.better.tools.BetterPlugin;
 import fr.better.tools.system.Instantiaters;
 import fr.better.tools.exception.CommandNotFoundException;

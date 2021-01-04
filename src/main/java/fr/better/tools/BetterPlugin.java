@@ -1,6 +1,5 @@
 package fr.better.tools;
 
-
 import fr.better.tools.command.*;
 import fr.better.tools.config.BetterConfig;
 import fr.better.tools.system.BListener;

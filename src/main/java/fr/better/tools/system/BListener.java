@@ -1,7 +1,10 @@
 package fr.better.tools.system;
 
 import fr.better.tools.inventory.gui.Gui;
+import fr.better.tools.inventory.gui.invAction.ActionType;
+import fr.better.tools.inventory.gui.invAction.ClickAction;
 import fr.better.tools.inventory.gui.invAction.CloseAction;
+import fr.better.tools.inventory.gui.invAction.DragAction;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;

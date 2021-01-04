@@ -3,7 +3,6 @@ package fr.better.tools.command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 
-import java.security.MessageDigest;
 import java.util.List;
 
 public abstract class BetterCommand implements CommandExecutor {
