@@ -1,5 +1,6 @@
 package fr.better.tools.utils.iterator;
 
+import fr.better.tools.utils.AllPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -46,5 +47,9 @@ public class HashMapWithPlayerKey<T>{
             players.add(p);
         }
         return players;
+    }
+
+    public AllPlayer all(){
+        return new AllPlayer(keys());
     }
 }
