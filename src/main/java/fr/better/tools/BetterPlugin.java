@@ -84,14 +84,4 @@ public abstract class BetterPlugin extends JavaPlugin {
     public void shutdown() {
         Bukkit.shutdown();
     }
-
-    public static void sendActionBarToAllPlayers(String message) {
-        sendActionBarToAllPlayers(message, -1);
-    }
-
-    public static void sendActionBarToAllPlayers(String message, int duration) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            new ActionBar(p).send(message, duration);
-        }
-    }
 }
