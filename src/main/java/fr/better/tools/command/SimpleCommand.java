@@ -1,6 +1,10 @@
 package fr.better.tools.command;
 
 import fr.better.tools.BetterPlugin;
+import fr.better.tools.command.abstraction.Action;
+import fr.better.tools.command.abstraction.MachineParameter;
+import fr.better.tools.command.abstraction.MixParameter;
+import fr.better.tools.command.abstraction.PlayerParameter;
 import fr.better.tools.exception.CommandNotFoundException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

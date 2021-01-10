@@ -1,5 +1,8 @@
 package fr.better.tools.command;
 
+import fr.better.tools.command.abstraction.MachineAction;
+import fr.better.tools.command.abstraction.MixAction;
+import fr.better.tools.command.abstraction.PlayerAction;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 
@@ -12,35 +15,6 @@ public abstract class BetterCommand implements CommandExecutor {
             topHelpMessage = "§7» §3Commande : !cmd! §7«",
             footHeadMessage = "§7Développez par §3!dev!"
                     ;
-
-    public interface Parameter{
-        default String utility(){ return "don't have any utility defined."; }
-        default String parameter(){ return "don't have any parameter defined."; }
-        default int parameterSize(){ return parameter().split(" ").length; }
-    }
-
-    public interface Action{}
-
-    public abstract class MachineAction implements Action{
-        public abstract void action(List<String> args);
-    }
-
-    public abstract class PlayerAction implements Action{
-        public abstract void action(Player player, List<String> args);
-        public String permission(){ return ""; }
-    }
-
-    public abstract class MixAction implements Action{
-        public String permission(){ return ""; }
-        public abstract void action(List<String> args);
-        public abstract void action(Player player, List<String> args);
-    }
-
-    public abstract class MachineParameter extends MachineAction implements Parameter{ }
-
-    public abstract class PlayerParameter extends PlayerAction implements Parameter{}
-
-    public abstract class MixParameter extends MixAction implements Parameter{ }
 
     public static String getErrorArgument() {
         return errorArgument;

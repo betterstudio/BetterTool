@@ -1,6 +1,10 @@
 package fr.better.tools.command;
 
 import fr.better.tools.BetterPlugin;
+import fr.better.tools.command.abstraction.MachineParameter;
+import fr.better.tools.command.abstraction.MixParameter;
+import fr.better.tools.command.abstraction.Parameter;
+import fr.better.tools.command.abstraction.PlayerParameter;
 import fr.better.tools.system.Instantiaters;
 import fr.better.tools.exception.CommandNotFoundException;
 import fr.better.tools.utils.Utility;

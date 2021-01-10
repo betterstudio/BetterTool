@@ -1,6 +1,7 @@
 package fr.better.tools;
 
 import fr.better.tools.command.*;
+import fr.better.tools.command.abstraction.*;
 import fr.better.tools.config.BetterConfig;
 import fr.better.tools.system.BListener;
 import fr.better.tools.system.Instantiaters;
@@ -41,7 +42,7 @@ public abstract class BetterPlugin extends JavaPlugin {
     ///FUNCTIONS
 
     ///////COMMANDS
-    public ArgumentCreator<BetterCommand.PlayerParameter, BetterCommand.MachineParameter, BetterCommand.MixParameter> addArguments(String arguments){
+    public ArgumentCreator<PlayerParameter, MachineParameter, MixParameter> addArguments(String arguments){
         return new ArgumentCreator(arguments, command);
     }
 
@@ -49,7 +50,7 @@ public abstract class BetterPlugin extends JavaPlugin {
         command = new AdvancedCommand(name, this);
     }
 
-    public ArgumentCreator<BetterCommand.PlayerAction, BetterCommand.MachineAction, BetterCommand.MixAction> addCommand(String arguments){
+    public ArgumentCreator<PlayerAction, MachineAction, MixAction> addCommand(String arguments){
 
         return new ArgumentCreator(arguments, new SimpleCommand(arguments, this));
     }

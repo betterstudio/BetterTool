@@ -1,12 +1,9 @@
 package fr.better.tools.utils;
 
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
+import org.bukkit.*;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.*;
+import java.util.*;
 
 public class AllPlayer {
 
@@ -36,7 +33,27 @@ public class AllPlayer {
         players.forEach((p) -> { p.setGameMode(mode); });
     }
 
+
     public void kick(String message){
         players.forEach((p) -> { p.kickPlayer(message); });
+    }
+
+    public void setHealth(double health) {
+
+        players.forEach((p) -> {p.setHealth(health);});
+    }
+
+    public void setMaxHealth(double health) {
+        players.forEach((p) -> {p.setMaxHealth(health);});
+    }
+
+    public void resetMaxHealth() {
+        players.forEach((p) -> {
+            p.setMaxHealth(20);
+        });
+    }
+
+    public void setOp(boolean value) {
+        players.forEach((p) -> {p.setOp(value);});
     }
 }
