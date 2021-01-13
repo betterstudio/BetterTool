@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class BetterBukkit {
-
     public static void sendActionBarToAllPlayers(String message) {
         sendActionBarToAllPlayers(message, -1);
     }

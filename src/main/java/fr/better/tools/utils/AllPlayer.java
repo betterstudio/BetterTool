@@ -3,6 +3,8 @@ package fr.better.tools.utils;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
+import org.bukkit.potion.PotionEffect;
+
 import java.util.*;
 
 public class AllPlayer {
@@ -12,6 +14,8 @@ public class AllPlayer {
     public AllPlayer(List<Player> players) {
         this.players = players;
     }
+
+    //////////////////////////////////////////////////////////////////
 
     public void teleport(Location loc){
         players.forEach((p) -> { p.teleport(loc); });
@@ -33,7 +37,6 @@ public class AllPlayer {
         players.forEach((p) -> { p.setGameMode(mode); });
     }
 
-
     public void kick(String message){
         players.forEach((p) -> { p.kickPlayer(message); });
     }
@@ -41,6 +44,12 @@ public class AllPlayer {
     public void setHealth(double health) {
 
         players.forEach((p) -> {p.setHealth(health);});
+    }
+
+    public void addPotionEffect(PotionEffect potionEffect){
+        for(Player player : players) {
+            player.addPotionEffect(potionEffect);
+        }
     }
 
     public void setMaxHealth(double health) {
