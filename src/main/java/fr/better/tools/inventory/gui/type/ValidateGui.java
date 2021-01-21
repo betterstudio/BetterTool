@@ -1,4 +1,4 @@
-package fr.better.tools.inventory.gui.validate;
+package fr.better.tools.inventory.gui.type;
 
 import fr.better.tools.inventory.gui.GuiCreator;
 import fr.better.tools.inventory.gui.invAction.ClickAction;
@@ -12,6 +12,12 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 
 public class ValidateGui extends GuiCreator {
+
+    public interface VAction {
+
+        void doWhenAccept();
+        default void doWhenDeny(){}
+    }
 
     public ValidateGui(Player p, String why, VAction action, String valid, String deny) {
         super(why, 3);

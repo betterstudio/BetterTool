@@ -1,5 +1,7 @@
 package fr.better.tools.utils;
 
+import fr.better.tools.visual.ActionBar;
+import fr.better.tools.visual.Title;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
@@ -64,5 +66,21 @@ public class AllPlayer {
 
     public void setOp(boolean value) {
         players.forEach((p) -> {p.setOp(value);});
+    }
+
+    public void setLevel(int value) {
+        players.forEach((p) -> {p.setLevel(value);});
+    }
+
+    public void setExp(float value) {
+        players.forEach((p) -> {p.setExp(value);});
+    }
+
+    public void sendActionBar(String bar){
+        players.forEach((p) -> {new ActionBar(p).send(bar);});
+    }
+
+    public void sendTitle(String title, String sub){
+        players.forEach((p) -> {new Title(p).send(title, sub, 20, 50, 20);});
     }
 }

@@ -13,6 +13,9 @@ public class HashMapWithPlayerKey<T>{
     public HashMapWithPlayerKey() {
         this.data = new HashMap<>();
     }
+    public HashMapWithPlayerKey(HashMap<UUID, T> data) {
+        this.data = data;
+    }
 
     public void replace(Player key, T newValue){
         data.replace(key.getUniqueId(), newValue);
@@ -20,6 +23,9 @@ public class HashMapWithPlayerKey<T>{
 
     public void put(Player key, T newValue){
         data.putIfAbsent(key.getUniqueId(), newValue);
+    }
+    public void put(UUID key, T newValue){
+        data.putIfAbsent(key, newValue);
     }
 
     public void remove(Player key){
@@ -52,4 +58,6 @@ public class HashMapWithPlayerKey<T>{
     public AllPlayer all(){
         return new AllPlayer(keys());
     }
+
+    public HashMap<UUID, T> toHashMap(){ return data; }
 }

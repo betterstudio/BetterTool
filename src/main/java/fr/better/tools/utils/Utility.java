@@ -64,4 +64,30 @@ public class Utility {
         }
         return returnItem;
     }
+
+    public static String booleanToCharacter(boolean b) {
+        if(b){
+            return "§a✔";
+        }else{
+            return "§c✗";
+        }
+    }
+
+    public String timeToMinute(int seconds){
+        int min = seconds/60;
+        int sec = seconds%60;
+
+        String ssec = sec + "";
+        String smin = min + "";
+
+        if(min < 10){
+            smin = "0" + smin;
+        }
+
+        if(sec < 10){
+            ssec = "0" + ssec;
+        }
+
+        return smin + ":" + ssec;
+    }
 }

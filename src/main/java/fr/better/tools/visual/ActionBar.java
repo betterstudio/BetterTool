@@ -23,7 +23,6 @@ public class ActionBar extends NMS {
         }else{
             this.useOldMethods = false;
         }
-
     }
 
     public void send(String message) {
