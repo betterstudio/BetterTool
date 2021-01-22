@@ -48,6 +48,18 @@ public class GuiManager extends InventoryUtils {
         }
     }
 
+    public void setFull(ItemStack what){
+        for(int i = 0; i < inventory.getSize(); i++){
+            inventory.setItem(i, what);
+        }
+    }
+
+    public void setFull(int color){
+        for(int i = 0; i < inventory.getSize(); i++){
+            inventory.setItem(i,  new ICreate(Material.STAINED_GLASS_PANE, 1, (short) color).setName(" ").build());
+        }
+    }
+
     public void setSideWays(ItemStack item){
         switch(inventory.getSize()/9){
             case 6:
