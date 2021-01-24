@@ -13,8 +13,7 @@ public abstract class BetterCommand implements CommandExecutor {
     private static String errorArgument = "§7Tu n'as pas fait la bonne commande",
             errorPermission = "§7Tu n'as pas la §3permissions !!",
             topHelpMessage = "§7» §3Commande : !cmd! §7«",
-            footHeadMessage = "§7Développez par §3!dev!"
-                    ;
+            footHeadMessage = "§7Développé par §3!dev!";
 
     public static String getErrorArgument() {
         return errorArgument;
@@ -45,12 +44,8 @@ public abstract class BetterCommand implements CommandExecutor {
             topHelpMessage = message;
             return this;
         }
-        public MessageBuilder fez(String message){
-            errorPermission = message;
-            return this;
-        }
-        public MessageBuilder r(String message){
-            errorPermission = message;
+        public MessageBuilder setErrorArgument(String message){
+            errorArgument = message;
             return this;
         }
     }

@@ -128,7 +128,7 @@ public class AdvancedCommand extends BetterCommand {
         commandSender.sendMessage("§8§m-----------------------");
         String who = Instantiaters.getPlugin().getDescription().getAuthors().get(0);
         if(who != null && !who.isEmpty())
-        commandSender.sendMessage(BetterCommand.getFootHeadMessage() + who);
+        commandSender.sendMessage(BetterCommand.getFootHeadMessage().replace("!dev!", who));
     }
 
     public void register(String s, Parameter parameter){
