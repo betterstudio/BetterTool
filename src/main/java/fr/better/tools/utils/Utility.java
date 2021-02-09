@@ -73,7 +73,7 @@ public class Utility {
         }
     }
 
-    public String timeToMinute(int seconds){
+    public static String timeToMinute(int seconds){
         int min = seconds/60;
         int sec = seconds%60;
 

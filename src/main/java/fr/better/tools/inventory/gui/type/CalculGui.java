@@ -18,23 +18,33 @@ public class CalculGui extends GuiCreator {
 
     private int size;
 
-    public CalculGui(String name, Material value, int first_jump, int second_jump, int default_value, CAction action) {
+    public CalculGui(String name, Material value, int first_jump, int second_jump, int default_value, CAction action, String... lore) {
         super(name, 3);
-        setBackLine(9);
+        setBackLine(7);
         setTopLine(9);
         setSideWays(9);
+
         size = default_value;
-        ItemStack valueI = new ICreate(value).setLore(" ", " §fValeur : " + default_value).build();
-        add(new ICreate(Material.SIGN).setName("§c- " + second_jump).build(), new ICreate(Material.SIGN).setName("§c- " + first_jump).build(), valueI
-                , new ICreate(Material.SIGN).setName("§a+ " + first_jump).build(), new ICreate(Material.SIGN).setName("§a+ " + second_jump).build());
+        ItemStack valueI = new ICreate(value).setName("§7Choisir").setLore(
+                " ",
+                " §fValeur : " + default_value,
+                " ",
+                " §7§aCliquer pour valider"
+        ).build();
+
+
+        set(new ICreate(Material.SIGN).setName("§c- " + second_jump).build(), 10);
+        set(new ICreate(Material.SIGN).setName("§c- " + first_jump).build(), 11);
+        set(valueI, 13);
+        set(new ICreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
+        set(new ICreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
 
         setAction(new ClickAction() {
             @Override
             public void action(InventoryClickEvent event) {
                 int slot = event.getSlot();
-
                 int addValue = 0;
-
+                event.setCancelled(true);
                 switch (slot) {
                     case 10:
                         addValue = -second_jump;
@@ -44,17 +54,16 @@ public class CalculGui extends GuiCreator {
                         addValue = -first_jump;
                         break;
 
-                    case 13:
+                    case 15:
                         addValue = first_jump;
                         break;
 
-                    case 14:
+                    case 16:
                         addValue = second_jump;
                         break;
 
-                    case 12:
+                    case 13:
                         action.accept(size, (Player) event.getWhoClicked());
-                        event.getWhoClicked().closeInventory();
                     default:
                         return;
                 }
