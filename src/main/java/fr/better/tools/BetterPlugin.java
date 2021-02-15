@@ -5,10 +5,8 @@ import fr.better.tools.command.abstraction.*;
 import fr.better.tools.config.BetterConfig;
 import fr.better.tools.system.BListener;
 import fr.better.tools.system.Instantiaters;
-import fr.better.tools.visual.ActionBar;
 import fr.better.tools.utils.Bungeecord;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 

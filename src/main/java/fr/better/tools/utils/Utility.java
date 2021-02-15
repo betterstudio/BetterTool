@@ -3,11 +3,24 @@ package fr.better.tools.utils;
 import fr.better.tools.config.Change;
 import fr.better.tools.system.Instantiaters;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Utility {
+
+    private static final String
+            F = "⬆",
+            FL = "⬉",
+            L = "⬅",
+            BL ="⬋",
+            B = "⬇",
+            BR = "⬊",
+            R = "➞",
+            FR = "⬈";
 
     public static String firstToUpper(String string){
         return Character.toUpperCase(string.charAt(0)) + string.substring(1);
@@ -18,10 +31,18 @@ public class Utility {
     }
 
     public static void repeat(Runnable runnable, int cooldown){
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(Instantiaters.getPlugin(), runnable, 0, cooldown);
+        Bukkit.getServer().getScheduler().runTaskTimer(Instantiaters.getPlugin(), runnable, 0, cooldown);
     }
 
     public static void later(Runnable runnable, int delay){
+        Bukkit.getServer().getScheduler().runTaskLater(Instantiaters.getPlugin(), runnable, delay);
+    }
+
+    public static void repeatAsync(Runnable runnable, int cooldown){
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(Instantiaters.getPlugin(), runnable, 0, cooldown);
+    }
+
+    public static void laterAsync(Runnable runnable, int delay){
         Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Instantiaters.getPlugin(), runnable, delay);
     }
 
@@ -89,5 +110,25 @@ public class Utility {
         }
 
         return smin + ":" + ssec;
+    }
+
+    public static String asArrow(Location first, Location direction) {
+        String arrow = "nop";
+
+        Vector a = direction.toVector().setY(0).subtract(first.toVector().setY(0));
+        Vector b = first.getDirection().setY(0);
+
+        double angleDir = (Math.atan2(a.getZ(), a.getX()) / 2 / Math.PI * 360 + 360) % 360, angleLook = (Math.atan2(b.getZ(), b.getX()) / 2 / Math.PI * 360 + 360) % 360, angle = (angleDir - angleLook + 360) % 360;
+
+        if (angle <= 022.5 || angle > 337.5) arrow = F;
+        else if (angle <= 337.5 && angle > 292.5) arrow = FL;
+        else if (angle <= 292.5 && angle > 247.5) arrow = L;
+        else if (angle <= 347.5 && angle > 202.0) arrow = BL;
+        else if (angle <= 202.0 && angle > 157.5) arrow = B;
+        else if (angle <= 157.5 && angle > 112.5) arrow = BR;
+        else if (angle <= 112.5 && angle > 067.5) arrow = R;
+        else if (angle <= 067.5 && angle > 022.5) arrow = FR;
+
+        return arrow;
     }
 }

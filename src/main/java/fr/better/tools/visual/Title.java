@@ -2,7 +2,6 @@ package fr.better.tools.visual;
 
 import fr.better.tools.utils.NMS;
 import org.bukkit.entity.Player;
-
 import java.lang.reflect.Constructor;
 
 public class Title extends NMS {

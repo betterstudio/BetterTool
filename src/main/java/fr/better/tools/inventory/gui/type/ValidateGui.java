@@ -2,7 +2,6 @@ package fr.better.tools.inventory.gui.type;
 
 import fr.better.tools.inventory.gui.GuiCreator;
 import fr.better.tools.inventory.gui.invAction.ClickAction;
-
 import fr.better.tools.inventory.ICreate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -12,5 +12,4 @@ public interface Gui {
     InvAction getAction(ActionType type);
     void setAction(InvAction action);
     boolean hasAction(ActionType type);
-
 }

@@ -18,6 +18,9 @@ public class Instantiaters {
     public static void systemRegisterGui(GuiCreator guiCreator) {
         listener.systemRegisterGui(guiCreator);
     }
+    public static void systemUnRegisterGui(GuiCreator guiCreator) {
+        listener.systemUnRegisterGui(guiCreator);
+    }
     public static void setListener(BListener bListener) {
         listener = bListener;
     }

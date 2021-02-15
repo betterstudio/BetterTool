@@ -72,7 +72,7 @@ public class BListener implements Listener {
     }
 
     @Deprecated
-    private void systemUnRegisterGui(Gui gui) {
+    public void systemUnRegisterGui(Gui gui) {
         all.remove(gui);
     }
 
