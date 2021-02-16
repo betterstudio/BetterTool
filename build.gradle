@@ -27,5 +27,4 @@ repositories {
 dependencies {
 
     implementation spigotApi('1.8')
-    implementation 'com.github.Fupery:InvMenu:1.2.4'
 }
