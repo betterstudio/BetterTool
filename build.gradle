@@ -26,5 +26,5 @@ repositories {
 
 dependencies {
 
-    implementation spigotApi('1.8')
+    compileOnly spigotApi('1.8')
 }
