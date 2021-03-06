@@ -20,7 +20,8 @@ public class Bungeecord implements PluginMessageListener {
         void receive(ByteArrayDataInput input);
     }
 
-    class Message{
+    public class Message{
+
         private final Player player;
         private final String channel;
         private final String subChannel;
