@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 public class ValidateGui extends GuiCreator {
 
@@ -18,13 +19,13 @@ public class ValidateGui extends GuiCreator {
         default void doWhenDeny(){}
     }
 
-    public ValidateGui(Player p, String why, VAction action, String valid, String deny) {
-        super(why, 3);
+    public ValidateGui(Player p, String guiName, VAction action, String validName, String denyName) {
+        super(guiName, 3);
 
         setTopLine(9);
         setBackLine(9);
-        set(new ICreate(Material.STAINED_GLASS,1, (short) 5).setName(deny).build(), 9, 10, 11, 12);
-        set(new ICreate(Material.STAINED_GLASS,1, (short) 14).setName(valid).build(), 14, 15, 16, 17);
+        set(new ICreate(Material.STAINED_GLASS,1, (short) 5).setName(validName).build(), 9, 10, 11, 12);
+        set(new ICreate(Material.STAINED_GLASS,1, (short) 14).setName(denyName).build(), 14, 15, 16, 17);
         setAction(new ClickAction() {
             @Override
             public void action(InventoryClickEvent event) {
@@ -40,8 +41,8 @@ public class ValidateGui extends GuiCreator {
         p.openInventory(inventory);
     }
 
-    public ValidateGui(Player p, String why, VAction action, ItemStack valid, ItemStack deny) {
-        super(why, 3);
+    public ValidateGui(Player p, String guiName, VAction action, ItemStack valid, ItemStack deny) {
+        super(guiName, 3);
 
         setTopLine(9);
         setBackLine(9);

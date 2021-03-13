@@ -12,14 +12,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class PutItemStackGui extends GuiCreator {
 
-    public interface IAction {
-        void validate(Player p, List<ItemStack> value);
-    }
-
-    public PutItemStackGui(String name, int line, IAction action) {
+    public PutItemStackGui(String name, int line, BiConsumer<Player, List<ItemStack>> action) {
         super(name, line);
 
         setTopLine(9);
@@ -44,7 +41,7 @@ public class PutItemStackGui extends GuiCreator {
                         items.add(stack);
                         slot++;
                     }
-                    action.validate((Player) event.getWhoClicked(), items);
+                    action.accept((Player) event.getWhoClicked(), items);
                 }
             }
         });
@@ -61,7 +58,7 @@ public class PutItemStackGui extends GuiCreator {
                     items.add(stack);
                     slot++;
                 }
-                action.validate((Player) event.getPlayer(), items);
+                action.accept((Player) event.getPlayer(), items);
             }
         });
     }
