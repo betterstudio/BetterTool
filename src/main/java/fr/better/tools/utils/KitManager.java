@@ -48,7 +48,6 @@ public class KitManager {
             this.oldInventory = new HashMap<>();
 
             int slot = 0;
-
             for (ItemStack stack : player.getInventory().getContents()) {
 
                 if (stack == null) {

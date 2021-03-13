@@ -1,19 +1,17 @@
 package fr.better.tools.command;
 
-import fr.better.tools.command.abstraction.MachineAction;
-import fr.better.tools.command.abstraction.MixAction;
-import fr.better.tools.command.abstraction.PlayerAction;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.entity.Player;
 
-import java.util.List;
 
 public abstract class BetterCommand implements CommandExecutor {
 
     private static String errorArgument = "§7Tu n'as pas fait la bonne commande",
             errorPermission = "§7Tu n'as pas la §3permissions !!",
-            topHelpMessage = "§7» §3Commande : !cmd! §7«",
-            footHeadMessage = "§7Développé par §3!dev!";
+            mainColor = "§6",
+            secondColor = "§7",
+            parameter = "§7La commande correcte est : " + mainColor + "/!cmd! !param!",
+            who = "Qg"
+    ;
 
     public static String getErrorArgument() {
         return errorArgument;
@@ -23,12 +21,20 @@ public abstract class BetterCommand implements CommandExecutor {
         return errorPermission;
     }
 
-    public static String getTopHelpMessage() {
-        return topHelpMessage;
+    public static String getMainColor() {
+            return mainColor;
     }
 
-    public static String getFootHeadMessage() {
-        return footHeadMessage;
+    public static String getSecondColor() {
+        return secondColor;
+    }
+
+    protected static String getWho() {
+        return who;
+    }
+
+    protected static String getErrorParameter() {
+        return parameter;
     }
 
     public static class MessageBuilder{
@@ -36,16 +42,21 @@ public abstract class BetterCommand implements CommandExecutor {
             errorPermission = message;
             return this;
         }
-        public MessageBuilder setFooterHelp(String message){
-            footHeadMessage = message;
-            return this;
-        }
-        public MessageBuilder setHeadHelp(String message){
-            topHelpMessage = message;
-            return this;
-        }
         public MessageBuilder setErrorArgument(String message){
             errorArgument = message;
+            return this;
+        }
+        public MessageBuilder setErrorParameter(String message){
+            parameter = message;
+            return this;
+        }
+        public MessageBuilder setColor(String main, String second){
+            mainColor = main;
+            secondColor = second;
+            return this;
+        }
+        public MessageBuilder setDevelopers(String message){
+            who = message;
             return this;
         }
     }

@@ -10,14 +10,12 @@ import fr.better.tools.exception.CommandNotFoundException;
 import fr.better.tools.utils.Utility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class AdvancedCommand extends BetterCommand {
+public class AdvancedCommand extends BetterCommand implements TabCompleter {
 
     private final Map<String, Parameter> all;
     private final String commandName;
@@ -27,6 +25,7 @@ public class AdvancedCommand extends BetterCommand {
         this.all = new HashMap<>();
         try{
             main.getCommand(commandName).setExecutor(this);
+            main.getCommand(commandName).setTabCompleter(this);
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
@@ -53,19 +52,27 @@ public class AdvancedCommand extends BetterCommand {
             }
 
             if (param == null) {
-
                 commandSender.sendMessage(BetterCommand.getErrorArgument());
                 return false;
             }
 
             List<String> args = new ArrayList<>();
 
-            for (int i = 1; i <= param.parameterSize(); i++) {
+            for (int i = 1; i <= getParameterSize(param, true); i++) {
                 try {
                     args.add(strings[i]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     break;
                 }
+            }
+            StringBuilder builder = new StringBuilder();
+            args.forEach(e->builder.append(" " + e));
+            if(args.size() < getParameterSize(param, false)){
+                commandSender.sendMessage(BetterCommand.getErrorParameter()
+                        .replace("!cmd!", s)
+                        .replace("!param!", strings[0] + builder.toString())
+                );
+                return false;
             }
 
             if(param instanceof PlayerParameter){
@@ -108,7 +115,7 @@ public class AdvancedCommand extends BetterCommand {
                 if(!(commandSender instanceof Player)){
                     parameter.action(args);
                 }else{
-                    commandSender.sendMessage("§7Hey ! You must not be a player to do that !");
+                    commandSender.sendMessage("§7Hey ! You must be a console Sender to do that !");
                 }
             }
         }else{
@@ -119,19 +126,50 @@ public class AdvancedCommand extends BetterCommand {
 
     private void sendHelp(CommandSender commandSender){
 
-        commandSender.sendMessage(BetterCommand.getTopHelpMessage().replace("!cmd!", Utility.firstToUpper(commandName)));
+        String cmd = Utility.firstToUpper(commandName);
+        if(cmd.length() < 4)cmd = cmd.toUpperCase();
+
+
+        commandSender.sendMessage(BetterCommand.getMainColor() + "Command : " + cmd);
         commandSender.sendMessage("§8§m-----------------------");
         for(Map.Entry<String, Parameter> entry : all.entrySet()){
             Parameter param = entry.getValue();
-            commandSender.sendMessage("§8» §7/" + commandName + " §3" + entry.getKey() + " " + param.parameter() + " §7" + param.utility());
+            if(commandSender instanceof Player && !commandSender.hasPermission(((PlayerParameter)param).permission())
+            )continue;
+            commandSender.sendMessage(BetterCommand.getSecondColor()
+                    + " • /" + commandName + " " + BetterCommand.getMainColor() + entry.getKey()
+                    + " " + param.parameter() + " " + BetterCommand.getSecondColor()  + param.utility());
         }
         commandSender.sendMessage("§8§m-----------------------");
         String who = Instantiaters.getPlugin().getDescription().getAuthors().get(0);
         if(who != null && !who.isEmpty())
-        commandSender.sendMessage(BetterCommand.getFootHeadMessage().replace("!dev!", who));
+        commandSender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
+    }
+
+    private int getParameterSize(Parameter param, boolean optional){
+        String[] split = param.parameter().split(" ");
+        int size =0;
+        for(String comp : split){
+            if(comp.startsWith("<")) {
+                size++;
+            }else if(optional){
+                size++;
+            }
+        }
+        return size;
     }
 
     public void register(String s, Parameter parameter){
         all.put(s, parameter);
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> result = new ArrayList<>();
+        for(String param : all.keySet()){
+            result.add(param);
+        }
+        result.add("help");
+        return result;
     }
 }
