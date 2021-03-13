@@ -1,9 +1,8 @@
+.gitattributes
 gradlew.bat
 gradlew
-gradle/
+gradle
 settings.gradle
-.idea/
-build/
-.gradle/
-gradle/wrapper/gradle-wrapper.jar
-gradle/wrapper/gradle-wrapper.properties
+build
+.gradle
+.idea
