@@ -139,11 +139,6 @@ public class KitManager {
             return "";
         }
 
-        @Override
-        public int parameterSize() {
-            return 0;
-        }
-
     }
 
 }

@@ -73,7 +73,7 @@ public class BListener implements Listener {
     public void systemUnRegisterGui(Gui gui) {
         all.remove(gui);
     }
-    
+
     private Gui systemGetGuiByInventory(Inventory inventory) {
         for(Gui gui : all){
             if(gui.give().equals(inventory))return gui;
