@@ -66,17 +66,14 @@ public class BListener implements Listener {
         systemUnRegisterGui(g);
     }
 
-    @Deprecated
     public void systemRegisterGui(Gui gui) {
         all.add(gui);
     }
 
-    @Deprecated
     public void systemUnRegisterGui(Gui gui) {
         all.remove(gui);
     }
-
-    @Deprecated
+    
     private Gui systemGetGuiByInventory(Inventory inventory) {
         for(Gui gui : all){
             if(gui.give().equals(inventory))return gui;
