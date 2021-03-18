@@ -51,7 +51,7 @@ public class ICreate {
 
     public ICreate addEnchant(final Enchantment enchant, final int i) {
         ItemMeta itm = item.getItemMeta();
-        itm.addEnchant(enchant, i, false);
+        itm.addEnchant(enchant, i, true);
         item.setItemMeta(itm);
         return this;
     }
