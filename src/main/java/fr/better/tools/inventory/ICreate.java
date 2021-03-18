@@ -1,13 +1,12 @@
 package fr.better.tools.inventory;
 
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.block.banner.Pattern;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +53,22 @@ public class ICreate {
         ItemMeta itm = item.getItemMeta();
         itm.addEnchant(enchant, i, false);
         item.setItemMeta(itm);
+        return this;
+    }
+
+    public ICreate setBannerPatern(DyeColor color, Pattern... patterns){
+        BannerMeta meta = (BannerMeta) item.getItemMeta();
+        meta.setPatterns(Arrays.asList(patterns));
+        meta.setBaseColor(color);
+        item.setItemMeta(meta);
+        return this;
+    }
+
+    public ICreate setBannerPatern(DyeColor color, List<Pattern> patterns){
+        BannerMeta meta = (BannerMeta) item.getItemMeta();
+        meta.setPatterns(patterns);
+        meta.setBaseColor(color);
+        item.setItemMeta(meta);
         return this;
     }
 

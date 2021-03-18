@@ -58,19 +58,15 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
 
             List<String> args = new ArrayList<>();
 
-            for (int i = 1; i <= getParameterSize(param, true); i++) {
-                try {
-                    args.add(strings[i]);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    break;
-                }
+            for (String part : strings) {
+                args.add(part);
             }
+
             StringBuilder builder = new StringBuilder();
-            args.forEach(e->builder.append(" " + e));
             if(args.size() < getParameterSize(param, false)){
                 commandSender.sendMessage(BetterCommand.getErrorParameter()
                         .replace("!cmd!", s)
-                        .replace("!param!", strings[0] + builder.toString())
+                        .replace("!param!", param.parameter())
                 );
                 return false;
             }
@@ -165,6 +161,7 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if(args.length != 0)return new ArrayList<>();
         List<String> result = new ArrayList<>();
         for(String param : all.keySet()){
             result.add(param);
