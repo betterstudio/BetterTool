@@ -59,6 +59,7 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
             List<String> args = new ArrayList<>();
 
             for (String part : strings) {
+                if(part.equalsIgnoreCase(strings[0]))continue;
                 args.add(part);
             }
 
