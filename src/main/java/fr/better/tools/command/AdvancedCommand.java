@@ -125,21 +125,29 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
         String cmd = Utility.firstToUpper(commandName);
         if(cmd.length() < 4)cmd = cmd.toUpperCase();
 
-
-        commandSender.sendMessage(BetterCommand.getMainColor() + "Command : " + cmd);
-        commandSender.sendMessage("§8§m-----------------------");
-        for(Map.Entry<String, Parameter> entry : all.entrySet()){
-            Parameter param = entry.getValue();
-            if(commandSender instanceof Player && !commandSender.hasPermission(((PlayerParameter)param).permission())
-            )continue;
-            commandSender.sendMessage(BetterCommand.getSecondColor()
-                    + " • /" + commandName + " " + BetterCommand.getMainColor() + entry.getKey()
-                    + " " + param.parameter() + " " + BetterCommand.getSecondColor()  + param.utility());
+        if(commandSender instanceof Player){
+            commandSender.sendMessage(BetterCommand.getMainColor() + "Command : " + cmd);
+            commandSender.sendMessage("§8§m-----------------------");
+            for(Map.Entry<String, Parameter> entry : all.entrySet()){
+                Parameter param = entry.getValue();
+                String perm;
+                if(param instanceof PlayerParameter){
+                    perm = ((PlayerParameter)param).permission();
+                }else{
+                    perm  = ((MixParameter)param).permission();
+                }
+                if(commandSender instanceof Player && !commandSender.hasPermission(perm))continue;
+                commandSender.sendMessage(BetterCommand.getSecondColor()
+                        + " • /" + commandName + " " + BetterCommand.getMainColor() + entry.getKey()
+                        + " " + param.parameter() + " " + BetterCommand.getSecondColor()  + param.utility());
+            }
+            commandSender.sendMessage("§8§m-----------------------");
+            String who = Instantiaters.getPlugin().getDescription().getAuthors().get(0);
+            if(who != null && !who.isEmpty())
+                commandSender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
+        }else{
+            System.out.println("Flemme mdr !");
         }
-        commandSender.sendMessage("§8§m-----------------------");
-        String who = Instantiaters.getPlugin().getDescription().getAuthors().get(0);
-        if(who != null && !who.isEmpty())
-        commandSender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
     }
 
     private int getParameterSize(Parameter param, boolean optional){
