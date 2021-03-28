@@ -65,7 +65,7 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
 
             if(args.size() < getParameterSize(param, false)){
                 commandSender.sendMessage(BetterCommand.getErrorParameter()
-                        .replace("!cmd!", s)
+                        .replace("!cmd!", s + " " + strings[0] + param.parameter())
                         .replace("!param!", param.parameter())
                 );
                 return false;
