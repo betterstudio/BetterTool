@@ -65,7 +65,7 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
 
             if(args.size() < getParameterSize(param, false)){
                 commandSender.sendMessage(BetterCommand.getErrorParameter()
-                        .replace("!cmd!", s + " " + strings[0] + param.parameter())
+                        .replace("!cmd!", s + " " + strings[0])
                         .replace("!param!", param.parameter())
                 );
                 return false;
@@ -80,7 +80,7 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
                     String permission = parameter.permission();
 
                     if(permission == null || permission.isEmpty() || player.hasPermission(permission)){
-                        parameter.action(player, args);
+                        player.sendMessage(parameter.action(player, args));
                     }
 
                 }else{
@@ -97,11 +97,11 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
                     String permission = parameter.permission();
 
                     if(permission == null || permission.isEmpty() || player.hasPermission(permission)){
-                        parameter.action(player, args);
+                        player.sendMessage(parameter.action(player, args));
                     }
 
                 }else{
-                    parameter.action(args);
+                    System.out.println(parameter.action(args));
                 }
 
             }else if(param instanceof MachineParameter){
@@ -109,7 +109,7 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
                 MachineParameter parameter = (MachineParameter) param;
 
                 if(!(commandSender instanceof Player)){
-                    parameter.action(args);
+                    System.out.println(parameter.action(args));
                 }else{
                     commandSender.sendMessage("§7Hey ! You must be a console Sender to do that !");
                 }

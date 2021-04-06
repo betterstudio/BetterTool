@@ -2,7 +2,6 @@ plugins {
     id 'java-library'
     id 'idea'
     id 'maven'
-    id 'fr.il_totore.manadrop' version '0.4.1-SNAPSHOT'
 }
 
 sourceCompatibility = 1.8
@@ -10,21 +9,19 @@ targetCompatibility = 1.8
 
 compileJava.options.encoding = 'UTF-8'
 
-import static fr.il_totore.manadrop.MinecraftRepositoryHelper.*
-import static fr.il_totore.manadrop.MinecraftDependencyHelper.spigotApi
-
 group 'fr.gabriel'
 version '0.1'
 
 repositories {
 
     mavenCentral()
-    spigotSnapshot()
-    sonatype()
+    mavenLocal()
 
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
 }
 
 dependencies {
 
-    compileOnly spigotApi('1.8')
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
 }
