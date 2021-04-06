@@ -17,10 +17,6 @@ public abstract class BetterPlugin extends JavaPlugin {
     private AdvancedCommand command;
     private BetterConfig config;
 
-    private File configFile;
-    private Bungeecord bungee;
-
-    ///INITIATERS
     @Override
     public void onEnable() {
         Instantiaters.setPlugin(this);
@@ -33,13 +29,9 @@ public abstract class BetterPlugin extends JavaPlugin {
         onStop();
     }
 
-    ///ABSTRACT
     public abstract void onStart();
     public abstract void onStop();
 
-    ///FUNCTIONS
-
-    ///////COMMANDS
     public ArgumentCreator<PlayerParameter, MachineParameter, MixParameter> addArguments(String arguments){
         return new ArgumentCreator(arguments, command);
     }
@@ -57,8 +49,7 @@ public abstract class BetterPlugin extends JavaPlugin {
         return command;
     }
 
-    ///////CONFIG
-    public BetterConfig getBetterConfig(){
+    public BetterConfig getConfig(){
         return config;
     }
 
@@ -66,11 +57,8 @@ public abstract class BetterPlugin extends JavaPlugin {
         config = new BetterConfig( "config");
     }
 
-    ////////SETUP
-
     public BetterCommand.MessageBuilder setupMessageCommand() { return new BetterCommand.MessageBuilder(); }
 
-    /////////HELP TOOL
     public void listen(Listener listener){
         getServer().getPluginManager().registerEvents(listener, this);
     }

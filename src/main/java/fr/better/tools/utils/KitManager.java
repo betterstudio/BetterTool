@@ -118,15 +118,14 @@ public class KitManager {
         }
 
         @Override
-        public void action(Player player, List<String> args) {
+        public String action(Player player, List<String> args) {
             for(KitHandler handler : editing){
                 if(handler.getPlayer() == player){
                     handler.valid();
-                    return;
+                    return "§7Tu as validé le nouveau kit !";
                 }
             }
-            player.sendMessage("§7Tu n'es pas en mode edition de kit !");
-            return;
+            return "§7Tu n'es pas en mode edition de kit !";
         }
 
         @Override

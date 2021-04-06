@@ -48,7 +48,7 @@ public class BetterBukkit {
         boolean useOldMethods = false;
         nmsver = nmsver.substring(nmsver.lastIndexOf(".") + 1);
 
-        if (nmsver.equalsIgnoreCase("v1_8_R1") || nmsver.startsWith("v1_7_")) { // Not sure if 1_7 works for the protocol hack?
+        if (nmsver.equalsIgnoreCase("v1_8_R1") || nmsver.startsWith("v1_7_")) {
             useOldMethods = true;
         }
         try {
@@ -97,7 +97,6 @@ public class BetterBukkit {
         sendActionBar(player, message);
 
         if (duration >= 0) {
-            // Sends empty message at the end of the duration. Allows messages shorter than 3 seconds, ensures precision.
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -106,7 +105,6 @@ public class BetterBukkit {
             }.runTaskLater(Instantiaters.getPlugin(), duration + 1);
         }
 
-        // Re-sends the messages every 3 seconds so it doesn't go away from the player's screen.
         while (duration > 40) {
             duration -= 40;
             new BukkitRunnable() {
@@ -114,7 +112,7 @@ public class BetterBukkit {
                 public void run() {
                     sendActionBar(player, message);
                 }
-            }.runTaskLater(Instantiaters.getPlugin(), (long) duration);
+            }.runTaskLater(Instantiaters.getPlugin(), duration);
         }
     }
 
