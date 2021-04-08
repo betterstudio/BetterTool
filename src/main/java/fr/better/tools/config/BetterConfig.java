@@ -1,6 +1,7 @@
 package fr.better.tools.config;
 
-import fr.better.tools.system.Instantiaters;
+import com.google.inject.Inject;
+import fr.better.tools.BetterPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +16,9 @@ import java.util.List;
 
 public class BetterConfig extends YamlConfiguration implements Config{
 
+    @Inject
+    private BetterPlugin plugin;
+
     private File configFile;
     private List<Change> grammar;
 
@@ -22,7 +26,7 @@ public class BetterConfig extends YamlConfiguration implements Config{
 
         if(!file.contains("."))file = file + ".yml";
 
-        this.configFile = new File(Instantiaters.getPlugin().getDataFolder() + "/" + file);
+        this.configFile = new File(plugin.getDataFolder() + "/" + file);
 
         if(!configFile.exists())saveConfigToFolder();
         reload();
@@ -46,7 +50,7 @@ public class BetterConfig extends YamlConfiguration implements Config{
     }
 
     public void saveConfigToFolder(){
-        Instantiaters.getPlugin().saveResource(configFile.getName(), false);
+        plugin.saveResource(configFile.getName(), false);
     }
 
     @Override

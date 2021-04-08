@@ -1,11 +1,9 @@
 package fr.better.tools.inventory.gui.type;
 
 import fr.better.tools.inventory.gui.GuiCreator;
-import fr.better.tools.inventory.gui.invAction.ClickAction;
 import fr.better.tools.inventory.ICreate;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -26,17 +24,14 @@ public class ValidateGui extends GuiCreator {
         setBackLine(9);
         set(new ICreate(Material.STAINED_GLASS,1, (short) 5).setName(validName).build(), 9, 10, 11, 12);
         set(new ICreate(Material.STAINED_GLASS,1, (short) 14).setName(denyName).build(), 14, 15, 16, 17);
-        setAction(new ClickAction() {
-            @Override
-            public void action(InventoryClickEvent event) {
-                int slot = event.getSlot();
-                event.setCancelled(true);
+        click(e -> {
+                int slot = e.getSlot();
+                e.setCancelled(true);
                 if(Arrays.asList(9, 10, 11, 12).contains(slot)){
                     action.doWhenAccept();
                 }else if(Arrays.asList(14, 15, 16, 17).contains(slot)){
                     action.doWhenDeny();
                 }
-            }
         });
         p.openInventory(inventory);
     }
@@ -48,17 +43,14 @@ public class ValidateGui extends GuiCreator {
         setBackLine(9);
         set(valid, 9, 10, 11, 12);
         set(deny, 14, 15, 16, 17);
-        setAction(new ClickAction() {
-            @Override
-            public void action(InventoryClickEvent event) {
-                int slot = event.getSlot();
-                event.setCancelled(true);
+        click(e -> {
+                int slot = e.getSlot();
+                e.setCancelled(true);
                 if(Arrays.asList(9, 10, 11, 12).contains(slot)){
                     action.doWhenAccept();
                 }else if(Arrays.asList(14, 15, 16, 17).contains(slot)){
                     action.doWhenDeny();
                 }
-            }
         });
         p.openInventory(inventory);
     }

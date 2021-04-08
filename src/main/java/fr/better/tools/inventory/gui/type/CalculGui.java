@@ -2,20 +2,12 @@ package fr.better.tools.inventory.gui.type;
 
 import fr.better.tools.inventory.ICreate;
 import fr.better.tools.inventory.gui.GuiCreator;
-import fr.better.tools.inventory.gui.invAction.ClickAction;
-import fr.better.tools.inventory.gui.invAction.CloseAction;
 import org.bukkit.Instrument;
 import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.*;
 
 public class CalculGui extends GuiCreator {
@@ -48,12 +40,10 @@ public class CalculGui extends GuiCreator {
         set(new ICreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
         set(new ICreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
 
-        setAction(new ClickAction() {
-            @Override
-            public void action(InventoryClickEvent event) {
-                int slot = event.getSlot();
+        click(e -> {
+                int slot = e.getSlot();
                 int addValue = 0;
-                event.setCancelled(true);
+                e.setCancelled(true);
                 switch (slot) {
                     case 10:
                         addValue = -second_jump;
@@ -72,33 +62,29 @@ public class CalculGui extends GuiCreator {
                         break;
 
                     case 13:
-                        result.accept((Player) event.getWhoClicked(), size);
+                        result.accept((Player) e.getWhoClicked(), size);
                     default:
                         return;
                 }
 
                 if(size + addValue >= max){
                     size = max;
-                    ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_BASS, 5, 0);
+                    ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.NOTE_BASS, 5, 0);
                 }else if(size + addValue <= min){
                     size = min;
-                    ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_BASS, 5, 0);
+                    ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.NOTE_BASS, 5, 0);
                 }else{
                     size = size + addValue;
-                    ((Player) event.getWhoClicked()).playNote(event.getWhoClicked().getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.A));
+                    ((Player) e.getWhoClicked()).playNote(e.getWhoClicked().getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.A));
                 }
 
                 ItemStack valueII = item.apply(size, (size + addValue >= max || size + addValue <= min));
                 set(valueII, 13);
-                ((Player) event.getWhoClicked()).updateInventory();
-            }
+                ((Player) e.getWhoClicked()).updateInventory();
         });
 
-        setAction(new CloseAction() {
-            @Override
-            public void action(InventoryCloseEvent event) {
-                result.accept((Player) event.getPlayer(), size);
-            }
+        close(e -> {
+                result.accept((Player) e.getPlayer(), size);
         });
     }
 
@@ -126,12 +112,10 @@ public class CalculGui extends GuiCreator {
         set(new ICreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
         set(new ICreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
 
-        setAction(new ClickAction() {
-            @Override
-            public void action(InventoryClickEvent event) {
-                int slot = event.getSlot();
+        click(e -> {
+                int slot = e.getSlot();
                 int addValue = 0;
-                event.setCancelled(true);
+                e.setCancelled(true);
                 switch (slot) {
                     case 10:
                         addValue = -second_jump;
@@ -150,25 +134,21 @@ public class CalculGui extends GuiCreator {
                         break;
 
                     case 13:
-                        result.accept((Player) event.getWhoClicked(), size);
+                        result.accept((Player) e.getWhoClicked(), size);
                     default:
                         return;
                 }
 
-                ((Player) event.getWhoClicked()).playNote(event.getWhoClicked().getLocation(),
+                ((Player) e.getWhoClicked()).playNote(e.getWhoClicked().getLocation(),
                         Instrument.PIANO, Note.natural(1, Note.Tone.A));
                 size = size + addValue;
                 ItemStack valueII = item.apply(size);
                 set(valueII, 13);
-                ((Player) event.getWhoClicked()).updateInventory();
-            }
+                ((Player) e.getWhoClicked()).updateInventory();
         });
 
-        setAction(new CloseAction() {
-            @Override
-            public void action(InventoryCloseEvent event) {
-                result.accept((Player) event.getPlayer(), size);
-            }
+        close(e -> {
+                result.accept((Player) e.getPlayer(), size);
         });
     }
 }

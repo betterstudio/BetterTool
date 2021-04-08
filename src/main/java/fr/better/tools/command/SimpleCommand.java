@@ -1,25 +1,24 @@
 package fr.better.tools.command;
 
+import com.google.inject.Inject;
 import fr.better.tools.BetterPlugin;
-import fr.better.tools.command.abstraction.Action;
-import fr.better.tools.command.abstraction.MachineParameter;
-import fr.better.tools.command.abstraction.MixParameter;
-import fr.better.tools.command.abstraction.PlayerParameter;
 import fr.better.tools.exception.CommandNotFoundException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import java.util.Arrays;
 import java.util.List;
 
 public class SimpleCommand extends BetterCommand {
 
-    private Action param;
+    private Argument param;
 
-    public SimpleCommand(String argument, BetterPlugin plugin) {
+    @Inject
+    private BetterPlugin plugin;
+
+    private SimpleCommand(String name, Argument argument) {
         try{
-            plugin.getCommand(argument).setExecutor(this);
+            this.param = argument;
+            plugin.getCommand(name).setExecutor(this);
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
@@ -29,55 +28,26 @@ public class SimpleCommand extends BetterCommand {
         }
     }
 
-    public void setParam(Action param) {
-        this.param = param;
-    }
-
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         List<String> args = Arrays.asList(strings);
-        if (param instanceof PlayerParameter) {
-            if (commandSender instanceof Player) {
-
-                Player p = (Player) commandSender;
-                PlayerParameter parameter = (PlayerParameter) param;
-                String permission = parameter.permission();
-
-                if(permission == null || permission.isEmpty() || p.hasPermission(permission)){
-                    parameter.action(p, args);
-                }else{
-                    p.sendMessage(getErrorPermission());
-                }
-            } else {
-                commandSender.sendMessage("You must be a player to do that !");
-            }
-
-        } else if (param instanceof MachineParameter) {
-
-            if (!(commandSender instanceof Player)) {
-                ((MachineParameter) param).action(args);
-            } else {
-                commandSender.sendMessage("§7Hey ! You must don't be a player to do that !");
-            }
-
-        } else if (param instanceof MixParameter) {
-
-            if (commandSender instanceof Player) {
-
-                Player p = (Player) commandSender;
-                MixParameter parameter = (MixParameter) param;
-                String permission = parameter.permission();
-
-                if(permission == null || permission.isEmpty() || p.hasPermission(permission)){
-                    parameter.action(p, args);
-                }else{
-                    p.sendMessage(getErrorPermission());
-                }
-            } else {
-                ((MixParameter)param).action(args);
-            }
-        }
+        param.run(commandSender, args);
         return true;
+    }
+
+    public static class Builder{
+
+        private Argument arg;
+        public Builder(String name, Argument arg){
+            this.arg = arg;
+            new SimpleCommand(name, arg);
+        }
+        public void forConsole(){
+            arg.setDontNeedPlayer(true);
+        }
+        public void playerAsArgs(){
+            arg.setTakePlayerAsParameter(true);
+        }
     }
 }

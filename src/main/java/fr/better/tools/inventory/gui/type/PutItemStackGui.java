@@ -25,14 +25,12 @@ public class PutItemStackGui extends GuiCreator {
         ItemStack validate = new ICreate(Material.DARK_OAK_DOOR).setName("§aValider").build();
 
 
-        setAction(new ClickAction() {
-            @Override
-            public void action(InventoryClickEvent event) {
-                if(event.getRawSlot() == line-1 || event.getRawSlot() == 0){
-                    event.setCancelled(true);
+        click(e -> {
+                if(e.getRawSlot() == line-1 || e.getRawSlot() == 0){
+                    e.setCancelled(true);
                 }
-                if(event.getCurrentItem() == null)return;
-                if(event.getCurrentItem().isSimilar(validate)){
+                if(e.getCurrentItem() == null)return;
+                if(e.getCurrentItem().isSimilar(validate)){
                     int slot = 0;
                     List<ItemStack> items = new ArrayList<>();
                     for(ItemStack stack : inventory.getContents()){
@@ -41,15 +39,11 @@ public class PutItemStackGui extends GuiCreator {
                         items.add(stack);
                         slot++;
                     }
-                    action.accept((Player) event.getWhoClicked(), items);
-                }
+                    action.accept((Player) e.getWhoClicked(), items);
             }
         });
 
-        setAction(new CloseAction() {
-            @Override
-            public void action(InventoryCloseEvent event) {
-
+        click(e -> {
                 int slot = 0;
                 List<ItemStack> items = new ArrayList<>();
                 for(ItemStack stack : inventory.getContents()){
@@ -58,8 +52,7 @@ public class PutItemStackGui extends GuiCreator {
                     items.add(stack);
                     slot++;
                 }
-                action.accept((Player) event.getPlayer(), items);
-            }
+                action.accept((Player) e.getWhoClicked(), items);
         });
     }
 }

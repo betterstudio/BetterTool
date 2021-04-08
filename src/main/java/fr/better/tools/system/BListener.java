@@ -1,81 +1,65 @@
 package fr.better.tools.system;
 
-import fr.better.tools.inventory.gui.Gui;
-import fr.better.tools.inventory.gui.invAction.ActionType;
-import fr.better.tools.inventory.gui.invAction.ClickAction;
-import fr.better.tools.inventory.gui.invAction.CloseAction;
-import fr.better.tools.inventory.gui.invAction.DragAction;
+import com.google.inject.Singleton;
+import fr.better.tools.BetterPlugin;
+import fr.better.tools.inventory.gui.GuiCreator;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class BListener implements Listener {
 
-    private final List<Gui> all;
+    private final List<GuiCreator> all;
 
-    public BListener(){
+    public BListener(BetterPlugin plugin){
+        plugin.listen(this);
         all = new ArrayList<>();
-        Instantiaters.setListener(this);
     }
 
     @EventHandler
-    public void onClick(InventoryClickEvent event){
+    public void onClick(InventoryClickEvent e){
 
-        Inventory inventory = event.getClickedInventory();
-        Gui gui = systemGetGuiByInventory(inventory);
-
-        if(gui == null)return;
-
-        try{
-            ((ClickAction)gui.getAction(ActionType.CLICK)).action(event);
-        }catch(Exception ignored){ }
-
-    }
-
-    @EventHandler
-    public void onDrag(InventoryDragEvent event){
-
-        Inventory inventory = event.getInventory();
-        Gui gui = systemGetGuiByInventory(inventory);
+        GuiCreator gui = systemGetGuiByInventory(e.getClickedInventory());
 
         if(gui == null)return;
+        if(gui.getClick() == null)return;
 
         try{
-            ((DragAction)gui.getAction(ActionType.DRAG)).action(event);
+            gui.getClick().accept(e);
         }catch(Exception ignored){ }
+
     }
 
     @EventHandler
     public void onClose(InventoryCloseEvent e){
 
-        Inventory i = e.getInventory();
-        Gui g = systemGetGuiByInventory(i);
+        GuiCreator gui = systemGetGuiByInventory(e.getInventory());
 
-        if(g == null)return;
-
+        if(gui == null)return;
+        if(gui.getClose() == null)return;
         try{
-            ((CloseAction) g.getAction(ActionType.CLOSE)).action(e);
+            gui.getClose().accept(e);
         }catch(Exception ignored){ }
 
-        systemUnRegisterGui(g);
+        unregisterGui(gui);
     }
 
-    public void systemRegisterGui(Gui gui) {
+    public void registerGui(GuiCreator gui) {
         all.add(gui);
     }
 
-    public void systemUnRegisterGui(Gui gui) {
+    public void unregisterGui(GuiCreator gui) {
         all.remove(gui);
     }
 
-    private Gui systemGetGuiByInventory(Inventory inventory) {
-        for(Gui gui : all){
+    private GuiCreator systemGetGuiByInventory(Inventory inventory) {
+        for(GuiCreator gui : all){
             if(gui.give().equals(inventory))return gui;
         }
         return null;

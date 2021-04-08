@@ -1,31 +1,30 @@
 package fr.better.tools.command;
 
+import com.google.inject.Inject;
 import fr.better.tools.BetterPlugin;
-import fr.better.tools.command.abstraction.MachineParameter;
-import fr.better.tools.command.abstraction.MixParameter;
-import fr.better.tools.command.abstraction.Parameter;
-import fr.better.tools.command.abstraction.PlayerParameter;
-import fr.better.tools.system.Instantiaters;
 import fr.better.tools.exception.CommandNotFoundException;
 import fr.better.tools.utils.Utility;
-import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class AdvancedCommand extends BetterCommand implements TabCompleter {
+public class AdvancedCommand implements CommandExecutor, Command {
 
-    private final Map<String, Parameter> all;
+    @Inject
+    private BetterPlugin plugin;
+
     private final String commandName;
+    private final HashMap<String, Argument> arguments;
 
-    public AdvancedCommand(String commandName, BetterPlugin main){
+    public AdvancedCommand(String commandName){
         this.commandName = commandName;
-        this.all = new HashMap<>();
+        this.arguments = new HashMap<>();
         try{
-            main.getCommand(commandName).setExecutor(this);
-            main.getCommand(commandName).setTabCompleter(this);
+            plugin.getCommand(commandName).setExecutor(this);
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
@@ -36,145 +35,72 @@ public class AdvancedCommand extends BetterCommand implements TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
 
         if(strings.length > 0 && !strings[0].equalsIgnoreCase("help")) {
-
-            Parameter param = null;
-
-            for (Map.Entry<String, Parameter> entry : all.entrySet()) {
-
-                Parameter p = entry.getValue();
-                String a = entry.getKey();
-
-                if (!a.equalsIgnoreCase(strings[0])) continue;
-                param = p;
-            }
-
-            if (param == null) {
-                commandSender.sendMessage(BetterCommand.getErrorArgument());
+            String p1 = strings[0];
+            if(!arguments.containsKey(p1)){
+                commandSender.sendMessage("§cErreur ! La commande que tu veux faire n'existe pas !");
                 return false;
             }
 
-            List<String> args = new ArrayList<>();
+            Argument args = arguments.get(p1);
+            ArrayList<String> param = new ArrayList<>();
 
             for (String part : strings) {
                 if(part.equalsIgnoreCase(strings[0]))continue;
-                args.add(part);
+                param.add(part);
             }
 
-            if(args.size() < getParameterSize(param, false)){
-                commandSender.sendMessage(BetterCommand.getErrorParameter()
-                        .replace("!cmd!", s + " " + strings[0])
-                        .replace("!param!", param.parameter())
-                );
-                return false;
-            }
+            args.run(commandSender, param);
 
-            if(param instanceof PlayerParameter){
-
-                if(commandSender instanceof Player){
-
-                    PlayerParameter parameter = (PlayerParameter) param;
-                    Player player = (Player) commandSender;
-                    String permission = parameter.permission();
-
-                    if(permission == null || permission.isEmpty() || player.hasPermission(permission)){
-                        player.sendMessage(parameter.action(player, args));
-                    }
-
-                }else{
-                    commandSender.sendMessage("You must be a player to do that");
-                }
-
-            }else if(param instanceof MixParameter){
-
-                MixParameter parameter = (MixParameter) param;
-
-                if(commandSender instanceof Player){
-
-                    Player player = (Player) commandSender;
-                    String permission = parameter.permission();
-
-                    if(permission == null || permission.isEmpty() || player.hasPermission(permission)){
-                        player.sendMessage(parameter.action(player, args));
-                    }
-
-                }else{
-                    System.out.println(parameter.action(args));
-                }
-
-            }else if(param instanceof MachineParameter){
-
-                MachineParameter parameter = (MachineParameter) param;
-
-                if(!(commandSender instanceof Player)){
-                    System.out.println(parameter.action(args));
-                }else{
-                    commandSender.sendMessage("§7Hey ! You must be a console Sender to do that !");
-                }
-            }
         }else{
-            sendHelp(commandSender);
+            senHelpMessage(commandSender);
         }
         return false;
     }
+    @Override
+    public Builder add(String name, Argument arg) {
+        return new AdvancedCommand.Builder(this, name, arg);
+    }
 
-    private void sendHelp(CommandSender commandSender){
+    @Override
+    public void senHelpMessage(CommandSender sender) {
 
         String cmd = Utility.firstToUpper(commandName);
         if(cmd.length() < 4)cmd = cmd.toUpperCase();
 
-        if(commandSender instanceof Player){
-            commandSender.sendMessage(BetterCommand.getMainColor() + "Command : " + cmd);
-            commandSender.sendMessage("§8§m-----------------------");
-            for(Map.Entry<String, Parameter> entry : all.entrySet()){
-                Parameter param = entry.getValue();
-                String perm;
-                if(param instanceof PlayerParameter){
-                    perm = ((PlayerParameter)param).permission();
-                }else{
-                    perm  = ((MixParameter)param).permission();
-                }
-                if(commandSender instanceof Player && !commandSender.hasPermission(perm))continue;
-                commandSender.sendMessage(BetterCommand.getSecondColor()
+        if(sender instanceof Player){
+            sender.sendMessage(BetterCommand.getMainColor() + "Command : " + cmd);
+            sender.sendMessage("§8§m-----------------------");
+            for(Map.Entry<String, Argument> entry : arguments.entrySet()){
+                Argument param = entry.getValue();
+                String perm = param.permission();
+                if(sender instanceof Player && !sender.hasPermission(perm))continue;
+                sender.sendMessage(BetterCommand.getSecondColor()
                         + " • /" + commandName + " " + BetterCommand.getMainColor() + entry.getKey()
-                        + " " + param.parameter() + " " + BetterCommand.getSecondColor()  + param.utility());
+                        + " " + param.parameter() + " " + BetterCommand.getSecondColor()  + param.getUtility());
             }
-            commandSender.sendMessage("§8§m-----------------------");
-            String who = Instantiaters.getPlugin().getDescription().getAuthors().get(0);
+            sender.sendMessage("§8§m-----------------------");
+            String who = plugin.getDescription().getAuthors().get(0);
             if(who != null && !who.isEmpty())
-                commandSender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
+                sender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
         }else{
             System.out.println("Flemme mdr !");
         }
     }
 
-    private int getParameterSize(Parameter param, boolean optional){
-        String[] split = param.parameter().split(" ");
-        int size =0;
-        for(String comp : split){
-            if(comp.startsWith("<")) {
-                size++;
-            }else if(optional){
-                size++;
-            }
+    public static class Builder{
+        private Argument arg;
+        public Builder(AdvancedCommand cmd, String name, Argument arg){
+            this.arg = arg;
+            cmd.arguments.put(name, arg);
         }
-        return size;
-    }
-
-    public void register(String s, Parameter parameter){
-        all.put(s, parameter);
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if(args.length != 0)return new ArrayList<>();
-        List<String> result = new ArrayList<>();
-        for(String param : all.keySet()){
-            result.add(param);
+        public void forConsole(){
+            arg.setDontNeedPlayer(true);
         }
-        result.add("help");
-        return result;
+        public void playerAsArgs(){
+            arg.setTakePlayerAsParameter(true);
+        }
     }
 }

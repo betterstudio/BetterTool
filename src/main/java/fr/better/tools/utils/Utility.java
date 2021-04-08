@@ -1,7 +1,6 @@
 package fr.better.tools.utils;
 
 import fr.better.tools.config.Change;
-import fr.better.tools.system.Instantiaters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -24,26 +23,6 @@ public class Utility {
 
     public static String firstToUpper(String string){
         return Character.toUpperCase(string.charAt(0)) + string.substring(1);
-    }
-
-    public static void async(Runnable runnable){
-        Bukkit.getServer().getScheduler().runTaskAsynchronously(Instantiaters.getPlugin(), runnable);
-    }
-
-    public static void repeat(Runnable runnable, int cooldown){
-        Bukkit.getServer().getScheduler().runTaskTimer(Instantiaters.getPlugin(), runnable, 0, cooldown);
-    }
-
-    public static void later(Runnable runnable, int delay){
-        Bukkit.getServer().getScheduler().runTaskLater(Instantiaters.getPlugin(), runnable, delay);
-    }
-
-    public static void repeatAsync(Runnable runnable, int cooldown){
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(Instantiaters.getPlugin(), runnable, 0, cooldown);
-    }
-
-    public static void laterAsync(Runnable runnable, int delay){
-        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Instantiaters.getPlugin(), runnable, delay);
     }
 
     public static int listAmmount(List<ItemStack> items){

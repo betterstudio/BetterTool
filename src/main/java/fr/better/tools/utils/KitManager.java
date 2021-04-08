@@ -2,7 +2,7 @@ package fr.better.tools.utils;
 
 import fr.better.tools.BetterBukkit;
 import fr.better.tools.command.AdvancedCommand;
-import fr.better.tools.command.abstraction.PlayerParameter;
+import fr.better.tools.command.Argument;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +17,7 @@ public class KitManager {
 
     public KitManager(AdvancedCommand command, String valideCommandName) {
         this.editing = new ArrayList<>();
-        command.register(valideCommandName, new ValidArgument(this));
+        new AdvancedCommand.Builder(command, valideCommandName, new ValidArgument(this));
     }
 
     public void clear(){
@@ -109,7 +109,7 @@ public class KitManager {
         }
     }
 
-    public class ValidArgument extends PlayerParameter {
+    public class ValidArgument extends Argument {
 
         private final KitManager kitManager;
 
@@ -118,7 +118,7 @@ public class KitManager {
         }
 
         @Override
-        public String action(Player player, List<String> args) {
+        public String execute(Player player, List<String> args) {
             for(KitHandler handler : editing){
                 if(handler.getPlayer() == player){
                     handler.valid();
@@ -137,7 +137,6 @@ public class KitManager {
         public String parameter() {
             return "";
         }
-
     }
 
 }

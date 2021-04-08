@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+
 public class GuiManager extends InventoryUtils {
 
     public GuiManager(String name, int line){
@@ -39,10 +41,11 @@ public class GuiManager extends InventoryUtils {
 
     public void setThePerfect(int data){
         try{
-            int[] i = {0, 1, 2, 6, 7, 8, 9, 17, 36, 45, 46, 47, 48, 52, 53, 54};
             ItemStack item = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build();
 
-            for(int in : i){ inventory.setItem(in,  item); }
+            Arrays.asList(0, 1, 2, 6, 7, 8, 9, 17, 36, 45, 46, 47, 48, 52, 53, 54).forEach(in -> {
+                inventory.setItem(in,  item);
+            });
         }catch(Exception ex){
             System.out.println("You can use that uniquely on a 6 line sized chest !");
         }
