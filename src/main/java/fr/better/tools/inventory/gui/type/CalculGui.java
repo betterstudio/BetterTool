@@ -8,7 +8,10 @@ import org.bukkit.Note;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import java.util.function.*;
+
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class CalculGui extends GuiCreator {
 

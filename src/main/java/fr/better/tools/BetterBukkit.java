@@ -3,6 +3,7 @@ package fr.better.tools;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+
 import java.util.HashMap;
 
 public class BetterBukkit {

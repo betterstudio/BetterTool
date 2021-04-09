@@ -3,7 +3,7 @@ package fr.better.tools.utils;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import fr.better.tools.BetterPlugin;
+import fr.better.tools.system.BListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -31,8 +31,8 @@ public class Bungeecord implements PluginMessageListener {
             this.player = player;
             this.channel = channel;
 
-            if(!Bukkit.getMessenger().isIncomingChannelRegistered(plugin, channel))Bukkit.getMessenger().registerIncomingPluginChannel(plugin, channel, new Bungeecord());
-            if(!Bukkit.getMessenger().isOutgoingChannelRegistered(plugin, channel))Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, channel);
+            if(!Bukkit.getMessenger().isIncomingChannelRegistered(BListener.MAIN, channel))Bukkit.getMessenger().registerIncomingPluginChannel(BListener.MAIN, channel, new Bungeecord());
+            if(!Bukkit.getMessenger().isOutgoingChannelRegistered(BListener.MAIN, channel))Bukkit.getMessenger().registerOutgoingPluginChannel(BListener.MAIN, channel);
 
             this.subChannel = subChannel;
             this.param = Arrays.asList(param);
@@ -47,14 +47,13 @@ public class Bungeecord implements PluginMessageListener {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF(subChannel);
             param.forEach((text) -> { out.writeUTF(text); });
-            player.sendPluginMessage(plugin, channel, out.toByteArray());
+            player.sendPluginMessage(BListener.MAIN, channel, out.toByteArray());
 
             if(result != null)messages.add(this);
         }
     }
 
     private final List<Message> messages = new ArrayList<>();
-    private final BetterPlugin plugin = Instantiaters.getPlugin();
 
     public int getPlayerCount(Player p){
         final int[] size = {0};

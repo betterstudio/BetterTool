@@ -5,7 +5,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
-import javax.inject.Inject;
 import java.util.function.Consumer;
 
 public class GuiCreator extends GuiManager {
@@ -13,17 +12,14 @@ public class GuiCreator extends GuiManager {
     private Consumer<InventoryClickEvent> click;
     private Consumer<InventoryCloseEvent> close;
 
-    @Inject
-    private BListener listener;
-
     public GuiCreator(String name, int line) {
         super(name, line);
-        listener.registerGui(this);
+        BListener.INSTANCE.registerGui(this);
     }
 
     private GuiCreator(Inventory inventory) {
         super(inventory);
-        listener.unregisterGui(this);
+        BListener.INSTANCE.unregisterGui(this);
     }
 
     public static GuiCreator asGui(Inventory inv){

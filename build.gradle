@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'idea'
     id 'maven'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 sourceCompatibility = 1.8
@@ -9,7 +10,7 @@ targetCompatibility = 1.8
 
 compileJava.options.encoding = 'UTF-8'
 
-group 'fr.gabriel'
+group 'fr.better'
 version '0.1'
 
 repositories {
@@ -23,7 +24,5 @@ repositories {
 }
 
 dependencies {
-
-    compile 'com.google.inject:guice:5.0.1'
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
 }

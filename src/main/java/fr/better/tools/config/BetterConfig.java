@@ -1,7 +1,6 @@
 package fr.better.tools.config;
 
-import com.google.inject.Inject;
-import fr.better.tools.BetterPlugin;
+import fr.better.tools.system.BListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,9 +15,6 @@ import java.util.List;
 
 public class BetterConfig extends YamlConfiguration implements Config{
 
-    @Inject
-    private BetterPlugin plugin;
-
     private File configFile;
     private List<Change> grammar;
 
@@ -26,7 +22,7 @@ public class BetterConfig extends YamlConfiguration implements Config{
 
         if(!file.contains("."))file = file + ".yml";
 
-        this.configFile = new File(plugin.getDataFolder() + "/" + file);
+        this.configFile = new File(BListener.MAIN.getDataFolder() + "/" + file);
 
         if(!configFile.exists())saveConfigToFolder();
         reload();
@@ -50,7 +46,7 @@ public class BetterConfig extends YamlConfiguration implements Config{
     }
 
     public void saveConfigToFolder(){
-        plugin.saveResource(configFile.getName(), false);
+        BListener.MAIN.saveResource(configFile.getName(), false);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package fr.better.tools.utils;
 
 import fr.better.tools.config.Change;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;

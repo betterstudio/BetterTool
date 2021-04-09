@@ -1,22 +1,19 @@
 package fr.better.tools;
 
-import com.google.inject.Singleton;
 import fr.better.tools.command.*;
 import fr.better.tools.config.BetterConfig;
 import fr.better.tools.system.BListener;
-import fr.better.tools.system.BetterModule;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@Singleton
-public abstract class BetterPlugin extends JavaPlugin {
+public class BetterPlugin extends JavaPlugin {
 
     private BetterConfig config;
 
     @Override
     public void onEnable() {
-        new BetterModule(this);
+        listen(new BListener(this));
         onStart();
     }
 
@@ -25,15 +22,15 @@ public abstract class BetterPlugin extends JavaPlugin {
         onStop();
     }
 
-    public abstract void onStart();
-    public abstract void onStop();
+    public void onStart(){}
+    public void onStop(){}
 
-    public Command createComplexCommand(String name, boolean complex){
-        return new AdvancedCommand(name, this);
+    public Command createComplexCommand(String name){
+        return new AdvancedCommand(name);
     }
 
-    public SimpleCommand.Builder createCommand(String name, Argument arg){
-        return new SimpleCommand.Builder(name, arg, this);
+    public SimpleCommand.Builder createCommand(String name, Action arg){
+        return new SimpleCommand.Builder(name, arg);
     }
 
     public BetterConfig getConfig(){

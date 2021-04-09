@@ -1,6 +1,5 @@
 package fr.better.tools.system;
 
-import com.google.inject.Singleton;
 import fr.better.tools.BetterPlugin;
 import fr.better.tools.inventory.gui.GuiCreator;
 import org.bukkit.event.EventHandler;
@@ -12,14 +11,17 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-@Singleton
 public class BListener implements Listener {
 
+    public static BListener INSTANCE;
+    public static BetterPlugin MAIN;
     private final List<GuiCreator> all;
 
     public BListener(BetterPlugin plugin){
         plugin.listen(this);
         all = new ArrayList<>();
+        MAIN = plugin;
+        INSTANCE = this;
     }
 
     @EventHandler

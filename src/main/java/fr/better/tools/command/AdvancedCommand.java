@@ -1,8 +1,7 @@
 package fr.better.tools.command;
 
-import com.google.inject.Inject;
-import fr.better.tools.BetterPlugin;
 import fr.better.tools.exception.CommandNotFoundException;
+import fr.better.tools.system.BListener;
 import fr.better.tools.utils.Utility;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,9 +13,6 @@ import java.util.Map;
 
 public class AdvancedCommand implements CommandExecutor, Command {
 
-    @Inject
-    private BetterPlugin plugin;
-
     private final String commandName;
     private final HashMap<String, Argument> arguments;
 
@@ -24,7 +20,7 @@ public class AdvancedCommand implements CommandExecutor, Command {
         this.commandName = commandName;
         this.arguments = new HashMap<>();
         try{
-            plugin.getCommand(commandName).setExecutor(this);
+            BListener.MAIN.getCommand(commandName).setExecutor(this);
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
@@ -52,13 +48,14 @@ public class AdvancedCommand implements CommandExecutor, Command {
                 param.add(part);
             }
 
-            args.run(commandSender, param);
+            args.run(commandSender, param, s + "" + strings[0]);
 
         }else{
             senHelpMessage(commandSender);
         }
         return false;
     }
+
     @Override
     public Builder add(String name, Argument arg) {
         return new AdvancedCommand.Builder(this, name, arg);
@@ -82,7 +79,7 @@ public class AdvancedCommand implements CommandExecutor, Command {
                         + " " + param.parameter() + " " + BetterCommand.getSecondColor()  + param.getUtility());
             }
             sender.sendMessage("§8§m-----------------------");
-            String who = plugin.getDescription().getAuthors().get(0);
+            String who = BListener.MAIN.getDescription().getAuthors().get(0);
             if(who != null && !who.isEmpty())
                 sender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
         }else{
@@ -91,7 +88,7 @@ public class AdvancedCommand implements CommandExecutor, Command {
     }
 
     public static class Builder{
-        private Argument arg;
+        private Action arg;
         public Builder(AdvancedCommand cmd, String name, Argument arg){
             this.arg = arg;
             cmd.arguments.put(name, arg);

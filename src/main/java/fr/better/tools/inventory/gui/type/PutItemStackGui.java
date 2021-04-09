@@ -2,12 +2,8 @@ package fr.better.tools.inventory.gui.type;
 
 import fr.better.tools.inventory.ICreate;
 import fr.better.tools.inventory.gui.GuiCreator;
-import fr.better.tools.inventory.gui.invAction.ClickAction;
-import fr.better.tools.inventory.gui.invAction.CloseAction;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
