@@ -1,6 +1,6 @@
 package fr.better.tools.inventory.gui.type;
 
-import fr.better.tools.inventory.ICreate;
+import fr.better.tools.inventory.ItemCreate;
 import fr.better.tools.inventory.gui.GuiCreator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class PutItemStackGui extends GuiCreator {
         setTopLine(9);
         setBackLine(9);
 
-        ItemStack validate = new ICreate(Material.DARK_OAK_DOOR).setName("§aValider").build();
+        ItemStack validate = new ItemCreate(Material.DARK_OAK_DOOR).setName("§aValider").build();
 
 
         click(e -> {

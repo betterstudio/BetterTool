@@ -1,6 +1,6 @@
 package fr.better.tools.inventory.gui.type;
 
-import fr.better.tools.inventory.ICreate;
+import fr.better.tools.inventory.ItemCreate;
 import fr.better.tools.inventory.gui.GuiCreator;
 import org.bukkit.Instrument;
 import org.bukkit.Material;
@@ -37,11 +37,11 @@ public class CalculGui extends GuiCreator {
         ItemStack valueI = item.apply(default_value, false);
 
 
-        set(new ICreate(Material.SIGN).setName("§c- " + second_jump).build(), 10);
-        set(new ICreate(Material.SIGN).setName("§c- " + first_jump).build(), 11);
+        set(new ItemCreate(Material.SIGN).setName("§c- " + second_jump).build(), 10);
+        set(new ItemCreate(Material.SIGN).setName("§c- " + first_jump).build(), 11);
         set(valueI, 13);
-        set(new ICreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
-        set(new ICreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
+        set(new ItemCreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
+        set(new ItemCreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
 
         click(e -> {
                 int slot = e.getSlot();
@@ -109,11 +109,11 @@ public class CalculGui extends GuiCreator {
         ItemStack valueI = item.apply(default_value);
 
 
-        set(new ICreate(Material.SIGN).setName("§c- " + second_jump).build(), 10);
-        set(new ICreate(Material.SIGN).setName("§c- " + first_jump).build(), 11);
+        set(new ItemCreate(Material.SIGN).setName("§c- " + second_jump).build(), 10);
+        set(new ItemCreate(Material.SIGN).setName("§c- " + first_jump).build(), 11);
         set(valueI, 13);
-        set(new ICreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
-        set(new ICreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
+        set(new ItemCreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
+        set(new ItemCreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
 
         click(e -> {
                 int slot = e.getSlot();

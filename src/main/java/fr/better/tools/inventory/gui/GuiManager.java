@@ -1,6 +1,6 @@
 package fr.better.tools.inventory.gui;
 
-import fr.better.tools.inventory.ICreate;
+import fr.better.tools.inventory.ItemCreate;
 import fr.better.tools.inventory.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,7 +20,7 @@ public class GuiManager extends InventoryUtils {
     }
 
     public void setTopLine(int data){
-        setTopLine(new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
+        setTopLine(new ItemCreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
     }
 
     public void setTopLine(ItemStack item){
@@ -30,7 +30,7 @@ public class GuiManager extends InventoryUtils {
     }
 
     public void setBackLine(int data){
-        setBackLine(new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
+        setBackLine(new ItemCreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
     }
 
     public void setBackLine(ItemStack item){
@@ -41,7 +41,7 @@ public class GuiManager extends InventoryUtils {
 
     public void setThePerfect(int data){
         try{
-            ItemStack item = new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build();
+            ItemStack item = new ItemCreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build();
 
             Arrays.asList(0, 1, 2, 6, 7, 8, 9, 17, 36, 45, 46, 47, 48, 52, 53, 54).forEach(in -> {
                 inventory.setItem(in,  item);
@@ -59,7 +59,7 @@ public class GuiManager extends InventoryUtils {
 
     public void setFull(int color){
         for(int i = 0; i < inventory.getSize(); i++){
-            inventory.setItem(i,  new ICreate(Material.STAINED_GLASS_PANE, 1, (short) color).setName(" ").build());
+            inventory.setItem(i,  new ItemCreate(Material.STAINED_GLASS_PANE, 1, (short) color).setName(" ").build());
         }
     }
 
@@ -88,7 +88,7 @@ public class GuiManager extends InventoryUtils {
     }
 
     public void setSideWays(int data){
-        setSideWays(new ICreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
+        setSideWays(new ItemCreate(Material.STAINED_GLASS_PANE, 1, (short) data).setName(" ").build());
     }
 
     public void set(ItemStack what, int... where){

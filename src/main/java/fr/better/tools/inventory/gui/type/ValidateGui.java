@@ -1,6 +1,6 @@
 package fr.better.tools.inventory.gui.type;
 
-import fr.better.tools.inventory.ICreate;
+import fr.better.tools.inventory.ItemCreate;
 import fr.better.tools.inventory.gui.GuiCreator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,8 +21,8 @@ public class ValidateGui extends GuiCreator {
 
         setTopLine(9);
         setBackLine(9);
-        set(new ICreate(Material.STAINED_GLASS,1, (short) 5).setName(validName).build(), 9, 10, 11, 12);
-        set(new ICreate(Material.STAINED_GLASS,1, (short) 14).setName(denyName).build(), 14, 15, 16, 17);
+        set(new ItemCreate(Material.STAINED_GLASS,1, (short) 5).setName(validName).build(), 9, 10, 11, 12);
+        set(new ItemCreate(Material.STAINED_GLASS,1, (short) 14).setName(denyName).build(), 14, 15, 16, 17);
         click(e -> {
                 int slot = e.getSlot();
                 e.setCancelled(true);
