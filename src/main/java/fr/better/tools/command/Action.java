@@ -48,8 +48,6 @@ public abstract class Action {
     }
 
     private boolean hasRequiredParameter(List<String> args, int plus){
-        System.out.println(Arrays.stream(parameter().split(" ")).filter(p -> { return p.startsWith("<"); }).count());
-        System.out.println(args.size());
         return Arrays.stream(parameter().split(" ")).filter(p -> { return p.startsWith("<"); }).count()+plus <= args.size();
     }
 

