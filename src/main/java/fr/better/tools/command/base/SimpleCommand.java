@@ -1,14 +1,13 @@
-package fr.better.tools.command;
+package fr.better.tools.command.base;
 
+import fr.better.tools.command.content.Action;
 import fr.better.tools.exception.CommandNotFoundException;
-import fr.better.tools.system.BListener;
+import fr.better.tools.listener.GuiListener;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 
 public class SimpleCommand extends BetterCommand {
 
@@ -17,7 +16,7 @@ public class SimpleCommand extends BetterCommand {
     private SimpleCommand(String name, Action argument) {
         try{
             this.param = argument;
-            BListener.MAIN.getCommand(name).setExecutor(this);
+            GuiListener.MAIN.getCommand(name).setExecutor(this);
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());

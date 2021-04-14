@@ -1,6 +1,7 @@
 package fr.better.tools.inventory.gui;
 
-import fr.better.tools.system.BListener;
+import fr.better.tools.manager.GuiManager;
+import fr.better.tools.listener.GuiListener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -14,12 +15,12 @@ public class GuiCreator extends GuiManager {
 
     public GuiCreator(String name, int line) {
         super(name, line);
-        BListener.INSTANCE.registerGui(this);
+        GuiListener.INSTANCE.registerGui(this);
     }
 
     private GuiCreator(Inventory inventory) {
         super(inventory);
-        BListener.INSTANCE.unregisterGui(this);
+        GuiListener.INSTANCE.unregisterGui(this);
     }
 
     public static GuiCreator asGui(Inventory inv){

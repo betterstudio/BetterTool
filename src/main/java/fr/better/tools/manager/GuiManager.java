@@ -1,7 +1,7 @@
-package fr.better.tools.inventory.gui;
+package fr.better.tools.manager;
 
 import fr.better.tools.inventory.ItemCreate;
-import fr.better.tools.inventory.InventoryUtils;
+import fr.better.tools.utils.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;

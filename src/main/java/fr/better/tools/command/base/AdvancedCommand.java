@@ -1,7 +1,9 @@
-package fr.better.tools.command;
+package fr.better.tools.command.base;
 
+import fr.better.tools.command.content.Action;
+import fr.better.tools.command.content.Argument;
 import fr.better.tools.exception.CommandNotFoundException;
-import fr.better.tools.system.BListener;
+import fr.better.tools.listener.GuiListener;
 import fr.better.tools.utils.Utility;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +22,7 @@ public class AdvancedCommand implements CommandExecutor, Command {
         this.commandName = commandName;
         this.arguments = new HashMap<>();
         try{
-            BListener.MAIN.getCommand(commandName).setExecutor(this);
+            GuiListener.MAIN.getCommand(commandName).setExecutor(this);
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
@@ -79,7 +81,7 @@ public class AdvancedCommand implements CommandExecutor, Command {
                         + " " + param.parameter() + " " + BetterCommand.getSecondColor()  + param.getUtility());
             }
             sender.sendMessage("§8§m-----------------------");
-            String who = BListener.MAIN.getDescription().getAuthors().get(0);
+            String who = GuiListener.MAIN.getDescription().getAuthors().get(0);
             if(who != null && !who.isEmpty())
                 sender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
         }else{

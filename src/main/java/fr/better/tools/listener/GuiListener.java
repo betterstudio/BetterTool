@@ -1,27 +1,23 @@
-package fr.better.tools.system;
+package fr.better.tools.listener;
 
 import fr.better.tools.BetterPlugin;
 import fr.better.tools.inventory.gui.GuiCreator;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BListener implements Listener {
+public class GuiListener implements Listener {
 
-    public static BListener INSTANCE;
+    public static GuiListener INSTANCE;
     public static BetterPlugin MAIN;
     private final List<GuiCreator> all;
 
-    public BListener(BetterPlugin plugin){
+    public GuiListener(BetterPlugin plugin){
         plugin.listen(this);
         all = new ArrayList<>();
         MAIN = plugin;

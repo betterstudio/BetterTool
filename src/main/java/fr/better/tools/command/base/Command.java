@@ -1,5 +1,6 @@
-package fr.better.tools.command;
+package fr.better.tools.command.base;
 
+import fr.better.tools.command.content.Argument;
 import org.bukkit.command.CommandSender;
 
 public interface Command {

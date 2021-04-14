@@ -1,4 +1,4 @@
-package fr.better.tools.config;
+package fr.better.tools.config.grammar;
 
 public class Change {
 

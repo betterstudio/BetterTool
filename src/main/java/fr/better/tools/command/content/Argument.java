@@ -1,6 +1,8 @@
-package fr.better.tools.command;
+package fr.better.tools.command.content;
 
-public abstract class Argument extends Action{
+import fr.better.tools.command.content.Action;
+
+public abstract class Argument extends Action {
     public abstract String utility();
 
     public String getUtility(){

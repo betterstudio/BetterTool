@@ -1,4 +1,4 @@
-package fr.better.tools.system;
+package fr.better.tools.listener;
 
 import fr.better.tools.event.PlayerKillEvent;
 import org.bukkit.Bukkit;

@@ -1,4 +1,4 @@
-package fr.better.tools;
+package fr.better.tools.utils;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

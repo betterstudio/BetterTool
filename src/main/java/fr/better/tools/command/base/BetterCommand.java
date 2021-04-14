@@ -1,4 +1,4 @@
-package fr.better.tools.command;
+package fr.better.tools.command.base;
 
 import org.bukkit.command.CommandExecutor;
 

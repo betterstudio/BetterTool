@@ -1,8 +1,8 @@
-package fr.better.tools.utils;
+package fr.better.tools.manager;
 
-import fr.better.tools.BetterBukkit;
-import fr.better.tools.command.AdvancedCommand;
-import fr.better.tools.command.Argument;
+import fr.better.tools.command.base.AdvancedCommand;
+import fr.better.tools.command.content.Argument;
+import fr.better.tools.utils.BetterBukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

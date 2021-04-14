@@ -1,9 +1,9 @@
-package fr.better.tools.utils;
+package fr.better.tools.manager;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import fr.better.tools.system.BListener;
+import fr.better.tools.listener.GuiListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Bungeecord implements PluginMessageListener {
+public class BungeecordManager implements PluginMessageListener {
 
     private interface Result{
         void receive(ByteArrayDataInput input);
@@ -31,8 +31,8 @@ public class Bungeecord implements PluginMessageListener {
             this.player = player;
             this.channel = channel;
 
-            if(!Bukkit.getMessenger().isIncomingChannelRegistered(BListener.MAIN, channel))Bukkit.getMessenger().registerIncomingPluginChannel(BListener.MAIN, channel, new Bungeecord());
-            if(!Bukkit.getMessenger().isOutgoingChannelRegistered(BListener.MAIN, channel))Bukkit.getMessenger().registerOutgoingPluginChannel(BListener.MAIN, channel);
+            if(!Bukkit.getMessenger().isIncomingChannelRegistered(GuiListener.MAIN, channel))Bukkit.getMessenger().registerIncomingPluginChannel(GuiListener.MAIN, channel, new BungeecordManager());
+            if(!Bukkit.getMessenger().isOutgoingChannelRegistered(GuiListener.MAIN, channel))Bukkit.getMessenger().registerOutgoingPluginChannel(GuiListener.MAIN, channel);
 
             this.subChannel = subChannel;
             this.param = Arrays.asList(param);
@@ -47,7 +47,7 @@ public class Bungeecord implements PluginMessageListener {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF(subChannel);
             param.forEach((text) -> { out.writeUTF(text); });
-            player.sendPluginMessage(BListener.MAIN, channel, out.toByteArray());
+            player.sendPluginMessage(GuiListener.MAIN, channel, out.toByteArray());
 
             if(result != null)messages.add(this);
         }

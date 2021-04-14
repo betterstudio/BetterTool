@@ -1,9 +1,13 @@
 package fr.better.tools;
 
-import fr.better.tools.command.*;
+import fr.better.tools.command.base.AdvancedCommand;
+import fr.better.tools.command.base.BetterCommand;
+import fr.better.tools.command.base.Command;
+import fr.better.tools.command.base.SimpleCommand;
+import fr.better.tools.command.content.Action;
 import fr.better.tools.config.BetterConfig;
-import fr.better.tools.system.BListener;
-import fr.better.tools.system.KillListener;
+import fr.better.tools.listener.GuiListener;
+import fr.better.tools.listener.KillListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,7 +18,7 @@ public class BetterPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        listen(new BListener(this));
+        listen(new GuiListener(this));
         listen(new KillListener());
         onStart();
     }

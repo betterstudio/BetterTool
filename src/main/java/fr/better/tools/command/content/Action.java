@@ -1,4 +1,4 @@
-package fr.better.tools.command;
+package fr.better.tools.command.content;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
