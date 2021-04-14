@@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BetterPlugin extends JavaPlugin {
+public abstract class BetterPlugin extends JavaPlugin {
 
     private BetterConfig config;
 
