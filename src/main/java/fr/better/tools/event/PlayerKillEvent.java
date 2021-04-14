@@ -1,6 +1,5 @@
 package fr.better.tools.event;
 
-import jdk.jfr.Event;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;

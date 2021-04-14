@@ -33,20 +33,13 @@ public class InventoryUtils {
         for(ItemStack item : inventory.getContents()){
 
             i++;
-
             if(item == null)continue;
-
             if(item.isSimilar(similar)){
-
                 int amount = item.getAmount();
-
                 if(size > amount){
-
                     size = size - amount;
                     inventory.remove(item);
-
                 } else {
-
                     ItemStack it = item.clone();
                     it.setAmount(amount-size);
                     inventory.setItem(i, it);
