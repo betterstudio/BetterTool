@@ -53,7 +53,7 @@ public abstract class BetterPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(listener, this);
     }
 
-    public void suicide() {
+    public void disable() {
         System.out.println("Suiciding plugin.");
         Bukkit.getPluginManager().disablePlugin(this);
     }
