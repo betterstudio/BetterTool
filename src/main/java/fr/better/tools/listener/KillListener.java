@@ -15,7 +15,6 @@ public class KillListener implements Listener {
             Player player = (Player) event.getDamager();
             Player target = (Player) event.getEntity();
 
-
             if(target.getHealth() - event.getFinalDamage() <= 0) {
                 PlayerKillEvent ev = new PlayerKillEvent(player, target);
                 Bukkit.getPluginManager().callEvent(ev);
