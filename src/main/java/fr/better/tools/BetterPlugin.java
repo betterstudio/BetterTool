@@ -7,7 +7,6 @@ import fr.better.tools.command.base.SimpleCommand;
 import fr.better.tools.command.content.Action;
 import fr.better.tools.config.BetterConfig;
 import fr.better.tools.listener.GuiListener;
-import fr.better.tools.listener.KillListener;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,7 +18,6 @@ public abstract class BetterPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         listen(new GuiListener(this));
-        listen(new KillListener());
         onStart();
     }
 

@@ -10,7 +10,7 @@ targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
 group 'fr.better'
-version 'v1.12-alpha.8'
+version 'v1.12-alpha.12'
 
 repositories{
     jcenter()

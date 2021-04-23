@@ -16,7 +16,7 @@ import java.util.Map;
 public class AdvancedCommand implements CommandExecutor, Command {
 
     private final String commandName;
-    private final HashMap<String, Argument> arguments;
+    private final Map<String, Argument> arguments;
 
     public AdvancedCommand(String commandName){
         this.commandName = commandName;

@@ -18,7 +18,6 @@ public class GuiListener implements Listener {
     private final List<GuiCreator> all;
 
     public GuiListener(BetterPlugin plugin){
-        plugin.listen(this);
         all = new ArrayList<>();
         MAIN = plugin;
         INSTANCE = this;
