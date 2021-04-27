@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AdvancedCommand implements CommandExecutor, Command {
@@ -43,7 +44,7 @@ public class AdvancedCommand implements CommandExecutor, Command {
             }
 
             Argument args = arguments.get(p1);
-            ArrayList<String> param = new ArrayList<>();
+            List<String> param = new ArrayList<>();
 
             for (String part : strings) {
                 if(part.equalsIgnoreCase(strings[0]))continue;

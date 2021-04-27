@@ -1,5 +1,7 @@
 package fr.better.tools.inventory;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -7,9 +9,10 @@ import org.bukkit.block.banner.Pattern;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
-
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class ItemCreate {
 
@@ -91,6 +94,22 @@ public class ItemCreate {
         SkullMeta skm = (SkullMeta) item.getItemMeta();
         skm.setOwner(owner);
         item.setItemMeta(skm);
+        return this;
+    }
+
+    public ItemCreate setHeadBase64(final String base64) {
+        SkullMeta meta = (SkullMeta) item.getItemMeta();
+        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+        profile.getProperties().put("textures", new Property("textures", base64));
+        Field profileField = null;
+        try {
+            profileField = meta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(meta, profile);
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
+        item.setItemMeta(meta);
         return this;
     }
 
