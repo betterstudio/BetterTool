@@ -10,17 +10,18 @@ targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
 group 'fr.better'
-version 'v1.12-alpha.13'
+version 'v1.13'
 
 repositories{
     jcenter()
     mavenCentral()
     mavenLocal()
 
+
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    compileOnly fileTree(dir:'libs',includes:["*.jar"])
 }
