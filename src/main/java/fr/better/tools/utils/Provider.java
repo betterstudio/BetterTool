@@ -1,5 +1,6 @@
 package fr.better.tools.utils;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -29,6 +30,10 @@ public class Provider<T> {
 
     public void forEach(Consumer<T> consumer){
         t.forEach(t->consumer.accept(t));
+    }
+
+    public void sort(Comparator<T> comparator){
+        t.sort(comparator);
     }
 
     public List<T> list() {
