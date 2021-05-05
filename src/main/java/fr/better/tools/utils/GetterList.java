@@ -2,11 +2,11 @@ package fr.better.tools.utils;
 
 import java.util.*;
 
-public class Provider<T> implements List<T>{
+public class GetterList<T> implements List<T>{
 
     private final List<T> l;
 
-    public Provider() {
+    public GetterList() {
         this.l = new LinkedList<>();
     }
 

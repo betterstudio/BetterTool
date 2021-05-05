@@ -8,11 +8,11 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class MapProvider<K,V> implements Map<K,V>{
+public class GetterMap<K,V> implements Map<K,V>{
 
     private final Map<K, V> map;
 
-    public MapProvider() {
+    public GetterMap() {
         this.map  = new HashMap<>();
     }
 
