@@ -38,7 +38,7 @@ public abstract class Action {
                     args.remove(0);
                     player.sendMessage(execute(player, args));
                 }else{
-                    sender.sendMessage("§cLa commande correcte est : /" + cmd + " " + parameter());
+                    sender.sendMessage("§cLa commande correcte est : /" + cmd + " <player> " + parameter());
                 }
             }else{
                 System.out.println("Error : this command require a player as command sender !");
@@ -47,7 +47,7 @@ public abstract class Action {
     }
 
     private boolean hasRequiredParameter(List<String> args, int plus){
-        return Arrays.stream(parameter().split(" ")).filter(p -> { return p.startsWith("<"); }).count()+plus <= args.size();
+        return Arrays.stream(parameter().split(" ")).filter(p -> p.startsWith("<")).count()+plus <= args.size();
     }
 
     public void setDontNeedPlayer(boolean dontNeedPlayer) {
