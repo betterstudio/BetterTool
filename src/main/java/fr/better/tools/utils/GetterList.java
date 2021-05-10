@@ -2,7 +2,7 @@ package fr.better.tools.utils;
 
 import java.util.*;
 
-public class GetterList<T> implements List<T>{
+public class GetterList<T> implements List<T>, Cloneable{
 
     private final List<T> l;
 
@@ -124,5 +124,15 @@ public class GetterList<T> implements List<T>{
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
         return l.subList(fromIndex, toIndex);
+    }
+
+    @Override
+    public GetterList<T> clone() {
+        try {
+            return (GetterList<T>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

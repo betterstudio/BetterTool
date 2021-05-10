@@ -8,7 +8,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class GetterMap<K,V> implements Map<K,V>{
+public class GetterMap<K,V> implements Map<K,V>, Cloneable{
 
     private final Map<K, V> map;
 
@@ -130,5 +130,15 @@ public class GetterMap<K,V> implements Map<K,V>{
     @Override
     public Set<Entry<K, V>> entrySet() {
         return map.entrySet();
+    }
+
+    @Override
+    public GetterMap<K, V> clone() {
+        try {
+            return (GetterMap<K, V>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
