@@ -10,7 +10,6 @@ public class GetterList<T> implements List<T>, Cloneable{
         this.l = new LinkedList<>();
     }
 
-
     @Override
     public int size() {
         return l.size();
@@ -18,7 +17,7 @@ public class GetterList<T> implements List<T>, Cloneable{
 
     @Override
     public boolean isEmpty() {
-        return size() != 0;
+        return l.isEmpty();
     }
 
     @Override
@@ -126,6 +125,8 @@ public class GetterList<T> implements List<T>, Cloneable{
         return l.subList(fromIndex, toIndex);
     }
 
+
+
     @Override
     public GetterList<T> clone() {
         try {
@@ -134,5 +135,10 @@ public class GetterList<T> implements List<T>, Cloneable{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return l.toString();
     }
 }
