@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 
 public interface Command {
 
-    AdvancedCommand.Builder add(String name, Argument arg);
+    void add(String name, Argument arg, ParticularityType type);
+    void add(String name, Argument arg);
     void senHelpMessage(CommandSender sender);
 }

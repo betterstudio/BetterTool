@@ -1,5 +1,6 @@
 package fr.better.tools.utils;
 
+import fr.better.tools.inventory.gui.Gui;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -7,6 +8,11 @@ import org.bukkit.potion.PotionEffect;
 import java.util.HashMap;
 
 public class BetterBukkit {
+
+    public static Gui.Builder createGUI(String name, int line){
+        return new Gui.Builder(new Gui(name, line));
+    }
+
     public static void give(Player player, HashMap<Integer, ItemStack> stuff) {
         for(Integer i : stuff.keySet()){
             switch(i){

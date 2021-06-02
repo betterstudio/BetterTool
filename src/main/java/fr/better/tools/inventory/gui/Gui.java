@@ -1,22 +1,73 @@
-package fr.better.tools.manager;
+package fr.better.tools.inventory.gui;
 
 import fr.better.tools.inventory.ItemCreate;
-import fr.better.tools.utils.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 
-public class GuiManager extends InventoryUtils {
+public class Gui {
 
-    public GuiManager(String name, int line){
-        super(Bukkit.createInventory(null, line*9, name));
+    private final Inventory inventory;
+    private BiConsumer<InventoryClickEvent, Player> click;
+    private BiConsumer<InventoryCloseEvent, Player> close;
+
+    public Gui(String name, int line) {
+        inventory = Bukkit.createInventory(null, line*9, name);
     }
 
-    public GuiManager(Inventory inventory){
-        super(inventory);
+    private Gui(Inventory inventory){
+        this.inventory = inventory;
+    }
+
+    public static Gui asGui(Inventory inv){
+        return new Gui(inv);
+    }
+
+    public void open(Player player) {
+        player.openInventory(inventory);
+    }
+
+    public String name() {
+        return inventory.getTitle();
+    }
+
+    public void click(BiConsumer<InventoryClickEvent, Player> action){
+        this.click = action;
+    }
+
+    public void close(BiConsumer<InventoryCloseEvent, Player> action){
+        this.close = action;
+    }
+
+    public void setClickCancelled(){
+        this.click = (e,p) -> {
+            e.setCancelled(true);
+        };
+    }
+
+    public void setCantClose(){
+        this.close = (e,p) -> {
+            e.getPlayer().openInventory(inventory);
+        };
+    }
+
+    public Inventory getInventory(){
+        return inventory;
+    }
+
+    public BiConsumer<InventoryClickEvent, Player> getClick() {
+        return click;
+    }
+
+    public BiConsumer<InventoryCloseEvent, Player> getClose() {
+        return close;
     }
 
     public void setTopLine(int data){
@@ -24,7 +75,7 @@ public class GuiManager extends InventoryUtils {
     }
 
     public void setTopLine(ItemStack item){
-       for(int i = 0; i < 9; i++){
+        for(int i = 0; i < 9; i++){
             inventory.setItem(i, item);
         }
     }
@@ -103,5 +154,55 @@ public class GuiManager extends InventoryUtils {
 
     public Inventory give() {
         return inventory;
+    }
+
+    public static class Builder{
+        private final Gui gui;
+
+        public Builder(Gui gui) {
+            this.gui = gui;
+        }
+
+        public Builder topLine(int data){
+            gui.setTopLine(data);return this;
+        }
+
+        public Builder backline(int data){
+            gui.setBackLine(data);return this;
+        }
+
+        public Builder sideway(int data){
+            gui.setSideWays(data);return this;
+        }
+
+        public Builder set(ItemStack stack, int slot){
+            gui.set(stack, slot);return this;
+        }
+
+        public Builder add(ItemStack stack){
+            gui.add(stack);return this;
+        }
+
+        public Builder full(int data){
+            gui.setFull(data);return this;
+        }
+
+        public Builder click(BiConsumer<InventoryClickEvent, Player> event){
+            gui.click(event);return this;
+        }
+
+        public Builder close(BiConsumer<InventoryClickEvent, Player> event){
+            gui.click(event);return this;
+        }
+
+        public Builder cantClose(){
+            gui.setCantClose();return this;
+        }
+
+        public Builder cantClick(){
+            gui.setClickCancelled();return this;
+        }
+
+        public Gui get(){return gui;}
     }
 }

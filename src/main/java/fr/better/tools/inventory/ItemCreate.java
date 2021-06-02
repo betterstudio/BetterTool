@@ -59,7 +59,7 @@ public class ItemCreate {
         return this;
     }
 
-    public ItemCreate setBannerPatern(DyeColor color, Pattern... patterns){
+    public ItemCreate setBannerPattern(DyeColor color, Pattern... patterns){
         BannerMeta meta = (BannerMeta) item.getItemMeta();
         meta.setPatterns(Arrays.asList(patterns));
         meta.setBaseColor(color);
@@ -67,7 +67,7 @@ public class ItemCreate {
         return this;
     }
 
-    public ItemCreate setBannerPatern(DyeColor color, List<Pattern> patterns){
+    public ItemCreate setBannerPattern(DyeColor color, List<Pattern> patterns){
         BannerMeta meta = (BannerMeta) item.getItemMeta();
         meta.setPatterns(patterns);
         meta.setBaseColor(color);

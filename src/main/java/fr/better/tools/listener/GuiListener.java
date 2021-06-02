@@ -1,24 +1,26 @@
 package fr.better.tools.listener;
 
 import fr.better.tools.BetterPlugin;
-import fr.better.tools.inventory.gui.GuiCreator;
+import fr.better.tools.inventory.gui.Gui;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class GuiListener implements Listener {
 
     public static GuiListener INSTANCE;
     public static BetterPlugin MAIN;
-    private final List<GuiCreator> all;
+    private final Map<Player, Gui> all;
 
     public GuiListener(BetterPlugin plugin){
-        all = new ArrayList<>();
+        all = new HashMap<>();
         MAIN = plugin;
         INSTANCE = this;
     }
@@ -26,43 +28,41 @@ public class GuiListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
 
-        GuiCreator gui = systemGetGuiByInventory(e.getClickedInventory());
+        Player player = (Player) e.getWhoClicked();
 
-        if(gui == null)return;
-        if(gui.getClick() == null)return;
+        Optional<Gui> gui = getGuiByInventory(e.getClickedInventory(), player);
+
+        if(!gui.isPresent())return;
+        if(gui.get().getClick() == null)return;
 
         try{
-            gui.getClick().accept(e);
+            gui.get().getClick().accept(e, player);
         }catch(Exception ignored){ }
-
     }
 
     @EventHandler
-    public void onClose(InventoryCloseEvent e){
+    public void onClose(InventoryCloseEvent event){
 
-        GuiCreator gui = systemGetGuiByInventory(e.getInventory());
+        Player player = (Player) event.getPlayer();
 
-        if(gui == null)return;
-        if(gui.getClose() == null)return;
+        Optional<Gui> gui = getGuiByInventory(event.getInventory(), player);
+
+        if(!gui.isPresent())return;
+
+        if(gui.get().getClose() == null)return;
         try{
-            gui.getClose().accept(e);
+            gui.get().getClose().accept(event, player);
         }catch(Exception ignored){ }
 
-        unregisterGui(gui);
+        all.remove(player);
     }
 
-    public void registerGui(GuiCreator gui) {
-        all.add(gui);
+    public void registerGui(Gui gui, Player player) {
+        all.put(player, gui);
     }
 
-    public void unregisterGui(GuiCreator gui) {
-        all.remove(gui);
-    }
-
-    private GuiCreator systemGetGuiByInventory(Inventory inventory) {
-        for(GuiCreator gui : all){
-            if(gui.give().equals(inventory))return gui;
-        }
-        return null;
+    private Optional<Gui> getGuiByInventory(Inventory inventory, Player player) {
+        return all.entrySet().stream().filter(entry -> entry.getValue().getInventory() == inventory && entry.getKey() == player)
+                .map(Map.Entry::getValue).findFirst();
     }
 }

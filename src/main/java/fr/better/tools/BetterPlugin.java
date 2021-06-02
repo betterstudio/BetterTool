@@ -33,8 +33,8 @@ public abstract class BetterPlugin extends JavaPlugin {
         return new AdvancedCommand(name);
     }
 
-    public SimpleCommand.Builder createCommand(String name, Action arg){
-        return new SimpleCommand.Builder(name, arg);
+    public SimpleCommand createCommand(String name, Action arg){
+        return new SimpleCommand(name, arg);
     }
 
     public BetterConfig getConfig(){
@@ -44,6 +44,8 @@ public abstract class BetterPlugin extends JavaPlugin {
     public void loadBetterConfig(){
         config = new BetterConfig( "config");
     }
+
+    public void reloadConfig() { config = new BetterConfig("config"); }
 
     public BetterCommand.MessageBuilder setupMessageCommand() { return new BetterCommand.MessageBuilder(); }
 

@@ -1,10 +1,8 @@
 package fr.better.tools.command.base;
 
-import fr.better.tools.command.content.Action;
 import fr.better.tools.command.content.Argument;
 import fr.better.tools.exception.CommandNotFoundException;
 import fr.better.tools.listener.GuiListener;
-import fr.better.tools.utils.Utility;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -60,47 +58,36 @@ public class AdvancedCommand implements CommandExecutor, Command {
     }
 
     @Override
-    public Builder add(String name, Argument arg) {
-        return new AdvancedCommand.Builder(this, name, arg);
+    public void add(String name, Argument arg, ParticularityType type) {
+        arguments.put(name, arg);
+    }
+
+    @Override
+    public void add(String name, Argument arg){
+        arguments.put(name, arg);
     }
 
     @Override
     public void senHelpMessage(CommandSender sender) {
 
-        String cmd = Utility.firstToUpper(commandName);
+        String cmd = Character.toUpperCase(commandName.charAt(0)) + commandName.substring(1);
         if(cmd.length() < 4)cmd = cmd.toUpperCase();
 
-        if(sender instanceof Player){
-            sender.sendMessage(BetterCommand.getMainColor() + "Command : " + cmd);
-            sender.sendMessage("§8§m-----------------------");
-            for(Map.Entry<String, Argument> entry : arguments.entrySet()){
-                Argument param = entry.getValue();
-                String perm = param.permission();
-                if(sender instanceof Player && !sender.hasPermission(perm))continue;
-                sender.sendMessage(BetterCommand.getSecondColor()
-                        + " • /" + commandName + " " + BetterCommand.getMainColor() + entry.getKey()
-                        + " " + param.parameter() + " " + BetterCommand.getSecondColor()  + param.getUtility());
-            }
-            sender.sendMessage("§8§m-----------------------");
-            String who = GuiListener.MAIN.getDescription().getAuthors().get(0);
-            if(who != null && !who.isEmpty())
-                sender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
-        }else{
-            System.out.println("Flemme mdr !");
-        }
-    }
+        sender.sendMessage(BetterCommand.getMainColor() + "Command : " + cmd);
+        sender.sendMessage("§8§m-----------------------");
 
-    public static class Builder{
-        private Action arg;
-        public Builder(AdvancedCommand cmd, String name, Argument arg){
-            this.arg = arg;
-            cmd.arguments.put(name, arg);
-        }
-        public void forConsole(){
-            arg.setDontNeedPlayer(true);
-        }
-        public void playerAsArgs(){
-            arg.setTakePlayerAsParameter(true);
-        }
+        arguments.forEach((token, arguments) -> {
+            String perm = arguments.permission();
+            if(sender instanceof Player && !sender.hasPermission(perm))return;
+            sender.sendMessage(BetterCommand.getSecondColor()
+                    + " • /" + commandName + " " + BetterCommand.getMainColor() + token
+                    + " " + arguments.parameter() + " " + BetterCommand.getSecondColor()  +
+                    arguments.getUtility(!(sender instanceof Player)));
+        });
+
+        sender.sendMessage("§8§m-----------------------");
+        String who = GuiListener.MAIN.getDescription().getAuthors().get(0);
+        if(who != null && !who.isEmpty())
+                sender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
     }
 }

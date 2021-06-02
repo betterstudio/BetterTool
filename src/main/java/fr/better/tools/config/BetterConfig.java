@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -17,7 +16,7 @@ import java.util.List;
 
 public class BetterConfig extends YamlConfiguration {
 
-    private File configFile;
+    private final File configFile;
     private List<Change> grammar;
 
     public BetterConfig(String file) {
@@ -33,9 +32,7 @@ public class BetterConfig extends YamlConfiguration {
     public void reload(){
         try {
             load(configFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

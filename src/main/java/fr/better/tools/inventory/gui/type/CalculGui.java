@@ -1,7 +1,7 @@
 package fr.better.tools.inventory.gui.type;
 
 import fr.better.tools.inventory.ItemCreate;
-import fr.better.tools.inventory.gui.GuiCreator;
+import fr.better.tools.inventory.gui.Gui;
 import org.bukkit.Instrument;
 import org.bukkit.Material;
 import org.bukkit.Note;
@@ -13,7 +13,7 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class CalculGui extends GuiCreator {
+public class CalculGui extends Gui {
 
     private int size;
 
@@ -43,7 +43,7 @@ public class CalculGui extends GuiCreator {
         set(new ItemCreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
         set(new ItemCreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
 
-        click(e -> {
+        click((e, p) -> {
                 int slot = e.getSlot();
                 int addValue = 0;
                 e.setCancelled(true);
@@ -65,29 +65,29 @@ public class CalculGui extends GuiCreator {
                         break;
 
                     case 13:
-                        result.accept((Player) e.getWhoClicked(), size);
+                        result.accept(p, size);
                     default:
                         return;
                 }
 
                 if(size + addValue >= max){
                     size = max;
-                    ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.NOTE_BASS, 5, 0);
+                    p.playSound(p.getLocation(), Sound.NOTE_BASS, 5, 0);
                 }else if(size + addValue <= min){
                     size = min;
-                    ((Player) e.getWhoClicked()).playSound(e.getWhoClicked().getLocation(), Sound.NOTE_BASS, 5, 0);
+                    p.playSound(e.getWhoClicked().getLocation(), Sound.NOTE_BASS, 5, 0);
                 }else{
                     size = size + addValue;
-                    ((Player) e.getWhoClicked()).playNote(e.getWhoClicked().getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.A));
+                    p.playNote(e.getWhoClicked().getLocation(), Instrument.PIANO, Note.natural(1, Note.Tone.A));
                 }
 
                 ItemStack valueII = item.apply(size, (size + addValue >= max || size + addValue <= min));
                 set(valueII, 13);
-                ((Player) e.getWhoClicked()).updateInventory();
+                p.updateInventory();
         });
 
-        close(e -> {
-                result.accept((Player) e.getPlayer(), size);
+        close((e,p) -> {
+                result.accept(p, size);
         });
     }
 
@@ -104,10 +104,8 @@ public class CalculGui extends GuiCreator {
         setTopLine(colorGlass);
         setSideWays(colorGlass);
 
-
         size = default_value;
         ItemStack valueI = item.apply(default_value);
-
 
         set(new ItemCreate(Material.SIGN).setName("§c- " + second_jump).build(), 10);
         set(new ItemCreate(Material.SIGN).setName("§c- " + first_jump).build(), 11);
@@ -115,10 +113,10 @@ public class CalculGui extends GuiCreator {
         set(new ItemCreate(Material.SIGN).setName("§a+ " + first_jump).build(), 15);
         set(new ItemCreate(Material.SIGN).setName("§a+ " + second_jump).build(), 16);
 
-        click(e -> {
-                int slot = e.getSlot();
+        click((event, player) -> {
+                int slot = event.getSlot();
                 int addValue = 0;
-                e.setCancelled(true);
+                event.setCancelled(true);
                 switch (slot) {
                     case 10:
                         addValue = -second_jump;
@@ -137,21 +135,21 @@ public class CalculGui extends GuiCreator {
                         break;
 
                     case 13:
-                        result.accept((Player) e.getWhoClicked(), size);
+                        result.accept(player, size);
                     default:
                         return;
                 }
 
-                ((Player) e.getWhoClicked()).playNote(e.getWhoClicked().getLocation(),
+                player.playNote(player.getLocation(),
                         Instrument.PIANO, Note.natural(1, Note.Tone.A));
                 size = size + addValue;
                 ItemStack valueII = item.apply(size);
                 set(valueII, 13);
-                ((Player) e.getWhoClicked()).updateInventory();
+                player.updateInventory();
         });
 
-        close(e -> {
-                result.accept((Player) e.getPlayer(), size);
+        close((event, player) -> {
+                result.accept(player, size);
         });
     }
 }
