@@ -12,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BetterConfig extends YamlConfiguration {
@@ -39,9 +40,7 @@ public class BetterConfig extends YamlConfiguration {
 
     public void addGrammar(Change... change){
         if(grammar == null)grammar = new ArrayList<>();
-        for(Change c : change){
-            grammar.add(c);
-        }
+        grammar.addAll(Arrays.asList(change));
     }
 
     public void saveConfigToFolder(){

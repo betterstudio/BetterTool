@@ -16,9 +16,11 @@ public class AdvancedCommand implements CommandExecutor, Command {
 
     private final String commandName;
     private final Map<String, Argument> arguments;
+    private final BetterCommand command;
 
-    public AdvancedCommand(String commandName){
+    public AdvancedCommand(String commandName, BetterCommand command){
         this.commandName = commandName;
+        this.command = command;
         this.arguments = new HashMap<>();
         try{
             GuiListener.MAIN.getCommand(commandName).setExecutor(this);
@@ -37,7 +39,9 @@ public class AdvancedCommand implements CommandExecutor, Command {
         if(strings.length > 0 && !strings[0].equalsIgnoreCase("help")) {
             String p1 = strings[0];
             if(!arguments.containsKey(p1)){
-                commandSender.sendMessage("§cErreur ! La commande que tu veux faire n'existe pas !");
+                StringBuilder builder = new StringBuilder();
+                arguments.keySet().forEach(keys -> builder.append("/").append(keys));
+                commandSender.sendMessage(this.command.getErrorArgument().apply(builder.append(">").toString().replaceFirst("/", "<")));
                 return false;
             }
 
@@ -49,11 +53,10 @@ public class AdvancedCommand implements CommandExecutor, Command {
                 param.add(part);
             }
 
-            args.run(commandSender, param, s + "" + strings[0]);
+            args.run(commandSender, param, s + " " + strings[0], this.command);
 
-        }else{
-            senHelpMessage(commandSender);
-        }
+        }else
+            sendHelpMessage(commandSender);
         return false;
     }
 
@@ -68,26 +71,24 @@ public class AdvancedCommand implements CommandExecutor, Command {
     }
 
     @Override
-    public void senHelpMessage(CommandSender sender) {
+    public void sendHelpMessage(CommandSender sender) {
 
         String cmd = Character.toUpperCase(commandName.charAt(0)) + commandName.substring(1);
         if(cmd.length() < 4)cmd = cmd.toUpperCase();
 
-        sender.sendMessage(BetterCommand.getMainColor() + "Command : " + cmd);
+        sender.sendMessage(command.getMainColor() + "Command : " + cmd);
         sender.sendMessage("§8§m-----------------------");
 
         arguments.forEach((token, arguments) -> {
             String perm = arguments.permission();
             if(sender instanceof Player && !sender.hasPermission(perm))return;
-            sender.sendMessage(BetterCommand.getSecondColor()
-                    + " • /" + commandName + " " + BetterCommand.getMainColor() + token
-                    + " " + arguments.parameter() + " " + BetterCommand.getSecondColor()  +
-                    arguments.getUtility(!(sender instanceof Player)));
+            sender.sendMessage(command.getMainColor()
+                    + " • /" + commandName + " " + command.getSecondColor() + token
+                    + " " + arguments.parameter()  + arguments.getUtility(!(sender instanceof Player)));
         });
 
         sender.sendMessage("§8§m-----------------------");
         String who = GuiListener.MAIN.getDescription().getAuthors().get(0);
-        if(who != null && !who.isEmpty())
-                sender.sendMessage(BetterCommand.getMainColor() + "By " + BetterCommand.getWho());
+        sender.sendMessage(command.getMainColor() + "By " + who);
     }
 }

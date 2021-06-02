@@ -1,6 +1,8 @@
 package fr.better.tools.command.content;
 
+import fr.better.tools.command.base.BetterCommand;
 import fr.better.tools.command.base.ParticularityType;
+import fr.better.tools.listener.GuiListener;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,7 +17,7 @@ public abstract class Action {
     public abstract String parameter();
     public String permission() { return ""; }
 
-    public void run(CommandSender sender, List<String> args, String cmd){
+    public void run(CommandSender sender, List<String> args, String cmd, BetterCommand command){
 
         if(sender instanceof Player){
             switch (type){
@@ -24,7 +26,7 @@ public abstract class Action {
                     if (hasRequiredParameter(args, 0)){
                         sender.sendMessage(execute((Player)sender, args));
                     }else{
-                        sender.sendMessage("§cLa commande correcte est : /" + cmd + " " + parameter());
+                        sender.sendMessage(command.getErrorParameter().apply(cmd + " " + parameter()));
                     }
                     break;
 
@@ -38,12 +40,12 @@ public abstract class Action {
                         args.remove(0);
                         sender.sendMessage(execute(player, args));
                     }else{
-                        sender.sendMessage("§cLa commande correcte est : /" + cmd + " " + parameter());
+                        sender.sendMessage(command.getErrorParameter().apply(cmd + " " + parameter()));
                     }
                     break;
 
                 case ONLY_CONSOLE:
-                    sender.sendMessage("§cTu dois faire ça depuis la console !");
+                    sender.sendMessage(GuiListener.MAIN.getCommand(cmd).getPermissionMessage());
                     break;
             }
         }else switch(type){
@@ -51,7 +53,7 @@ public abstract class Action {
                     if (hasRequiredParameter(args, 0)){
                         sender.sendMessage(execute(null, args));
                     }else{
-                        sender.sendMessage("§cLa commande correcte est : /" + cmd + " " + parameter());
+                        sender.sendMessage(command.getErrorParameter().apply(cmd + " " + parameter()));
                     }
                     break;
                 case TAKE_PLAYER_AS_ARG:
@@ -65,11 +67,11 @@ public abstract class Action {
                         args.remove(0);
                         sender.sendMessage(execute(player, args));
                     }else{
-                        sender.sendMessage("§cLa commande correcte est : /" + cmd + " " + parameter());
+                        sender.sendMessage(command.getErrorParameter().apply(cmd + " " + parameter()));
                     }
                     break;
                 case NEED_PLAYER:
-                    sender.sendMessage("§cCette commande n'est que pour les joueurs !");
+                    sender.sendMessage("This is only a player's command !");
                     break;
         }
     }
