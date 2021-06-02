@@ -11,3 +11,21 @@ It allows you to create your own subcommands by automatically generating the hel
 First, create a ``Command`` object in your hand, and instantiate it with the function ``BetterPlugin#createComplexCommand``.
 
 You can now add your own sub-arguments with the function ``Command#add``, this takes the name of the sub-command and its execution instance as a parameter.
+
+```java
+
+public void onStart(){
+  Command command = createComplexCommand("test");
+  command.add("underCommand", new UnderCommandArgument());
+}
+
+```
+
+The abstract class Argument is needed. The function ``Argument#utility()`` is for the command's utility in the help message. The functiopn ``Argument#parameter`` define the parameters in the help message AND he parameters essential to the execution of the ducoup command, you must respect a graphic charter: for example `` <player> [size] ``, here the argument `` <player> `` is essential and must be specified otherwise there will be an error. On the other hand, the argument `` [size] `` is optional.
+
+```java
+public class RandomArgument extend Argument{
+
+
+}
+```
