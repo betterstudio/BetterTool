@@ -62,11 +62,13 @@ public class AdvancedCommand implements CommandExecutor, Command {
 
     @Override
     public void add(String name, Argument arg, ParticularityType type) {
+        arg.setType(type);
         arguments.put(name, arg);
     }
 
     @Override
     public void add(String name, Argument arg){
+        arg.setType(ParticularityType.NEED_PLAYER);
         arguments.put(name, arg);
     }
 
