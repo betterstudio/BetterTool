@@ -9,10 +9,6 @@ import java.util.HashMap;
 
 public class BetterBukkit {
 
-    public static Gui.Builder createGUI(String name, int line){
-        return new Gui.Builder(new Gui(name, line));
-    }
-
     public static void give(Player player, HashMap<Integer, ItemStack> stuff) {
         for(Integer i : stuff.keySet()){
             switch(i){
