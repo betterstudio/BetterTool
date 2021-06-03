@@ -20,8 +20,8 @@ public abstract class BetterPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         listen(new GuiListener(this));
-        onStart();
         command = new BetterCommand();
+        onStart();
     }
 
     @Override
