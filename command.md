@@ -24,8 +24,42 @@ public void onStart(){
 The abstract class Argument is needed. The function ``Argument#utility()`` is for the command's utility in the help message. The functiopn ``Argument#parameter`` define the parameters in the help message AND he parameters essential to the execution of the ducoup command, you must respect a graphic charter: for example `` <player> [size] ``, here the argument `` <player> `` is essential and must be specified otherwise there will be an error. On the other hand, the argument `` [size] `` is optional.
 
 ```java
-public class RandomArgument extend Argument{
 
+public class AddArgument extends Argument {
 
+    @Override
+    public String utility() {
+        return "<enter the utility of the command, who is used in the help message>";
+    }
+
+    @Override
+    public String execute(Player player, List<String> parameters) {
+        // Do what you want when someone execute the command
+        return "<return the message sended to the player here>";
+    }
+
+    @Override
+    public String parameter() {
+        //<> for essentials args
+        //[] for optional args
+        return "<args1> <args2> [args3]";
+    }
 }
 ```
+
+You could arleady use the function ``Argument#permission()`` to define permission needed to this arg.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
