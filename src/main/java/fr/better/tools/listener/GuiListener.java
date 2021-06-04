@@ -31,13 +31,14 @@ public class GuiListener implements Listener {
         Player player = (Player) e.getWhoClicked();
 
         Optional<Gui> gui = getGuiByInventory(e.getClickedInventory(), player);
-
+        System.out.println(gui.toString());
         if(!gui.isPresent())return;
+        System.out.println("valid");
         if(gui.get().getClick() == null)return;
-
+        System.out.println("valid2");
         try{
             gui.get().getClick().accept(e, player);
-        }catch(Exception ignored){ }
+        }catch(Exception ignored){}
     }
 
     @EventHandler
