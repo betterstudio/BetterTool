@@ -1,6 +1,7 @@
 package fr.better.tools.inventory.gui;
 
 import fr.better.tools.inventory.ItemCreate;
+import fr.better.tools.listener.GuiListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,6 +33,7 @@ public class Gui {
     }
 
     public Gui open(Player player) {
+        GuiListener.INSTANCE.registerGui(this, player);
         player.openInventory(inventory);
         return this;
     }

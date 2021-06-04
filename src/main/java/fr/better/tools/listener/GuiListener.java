@@ -31,11 +31,8 @@ public class GuiListener implements Listener {
         Player player = (Player) e.getWhoClicked();
 
         Optional<Gui> gui = getGuiByInventory(e.getClickedInventory(), player);
-        System.out.println(gui.toString());
         if(!gui.isPresent())return;
-        System.out.println("valid");
         if(gui.get().getClick() == null)return;
-        System.out.println("valid2");
         try{
             gui.get().getClick().accept(e, player);
         }catch(Exception ignored){}
@@ -64,7 +61,7 @@ public class GuiListener implements Listener {
 
     private Optional<Gui> getGuiByInventory(Inventory inventory, Player player) {
         System.out.println(all.toString());
-        return all.entrySet().stream().filter(entry -> entry.getValue().getInventory() == inventory && entry.getKey() == player)
+        return all.entrySet().stream().filter(entry -> entry.getValue().getInventory() == inventory && entry.getKey().equals(player))
                 .map(Map.Entry::getValue).findFirst();
     }
 }
