@@ -60,7 +60,7 @@ public class GuiListener implements Listener {
     }
 
     private Optional<Gui> getGuiByInventory(Inventory inventory, Player player) {
-        System.out.println(all.toString());
+        System.out.println(all.values().toString());
         System.out.println(inventory + "    " + player);
         return all.entrySet().stream().filter(entry -> entry.getValue().getInventory() == inventory && entry.getKey().equals(player))
                 .map(Map.Entry::getValue).findFirst();
