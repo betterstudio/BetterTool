@@ -33,7 +33,7 @@ public abstract class BetterPlugin extends JavaPlugin {
     public void onStop(){}
 
     public Command createComplexCommand(String name){
-        return new AdvancedCommand(name, command);
+        return new AdvancedCommand(name, this, command);
     }
 
     public SimpleCommand createCommand(String name, Action arg){

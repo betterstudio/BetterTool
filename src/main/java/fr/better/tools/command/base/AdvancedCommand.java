@@ -1,5 +1,6 @@
 package fr.better.tools.command.base;
 
+import fr.better.tools.BetterPlugin;
 import fr.better.tools.command.content.Argument;
 import fr.better.tools.exception.CommandNotFoundException;
 import fr.better.tools.listener.GuiListener;
@@ -18,12 +19,14 @@ public class AdvancedCommand implements CommandExecutor, Command {
     private final Map<String, Argument> arguments;
     private final BetterCommand command;
 
-    public AdvancedCommand(String commandName, BetterCommand command){
+    public AdvancedCommand(String commandName, BetterPlugin plugin, BetterCommand command){
+
         this.commandName = commandName;
         this.command = command;
         this.arguments = new HashMap<>();
+
         try{
-            GuiListener.MAIN.getCommand(commandName).setExecutor(this);
+            plugin.getCommand(commandName).setExecutor(this);
         }catch(NullPointerException e){
             try {
                 throw new CommandNotFoundException(e.getCause());
